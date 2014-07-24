@@ -7,6 +7,27 @@
   src: local('PT Sans'), local('PTSans-Regular'), url('/assets/fonts/pt-sans.ttf') format('truetype');
 }
 
+@font-face {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Roboto Regular'), local('Roboto-Regular'), url('/assets/fonts/roboto-regular.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 700;
+  src: local('Roboto Bold'), local('Roboto-Bold'), url('/assets/fonts/roboto-bold.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'Roboto';
+  font-style: italic;
+  font-weight: 400;
+  src: local('Roboto Italic'), local('Roboto-Italic'), url('/assets/fonts/roboto-italic.woff') format('woff');
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -15,7 +36,7 @@
 html, body { height: 100%; }
 
 body {
-  font-family: Helvetica, Arial, sans-serif;
+  font-family: "Roboto";
   font-size: 16px;
   line-height: 1.5;
   font-weight: 300;
@@ -160,7 +181,6 @@ a:visited { color: #205caa; }
   margin-right: 300px;
   max-width: 75%;
 
-  height: 176px;
   padding: 30px 0;
 }
 
@@ -201,10 +221,12 @@ a:visited { color: #205caa; }
 .post-header { margin: 10px 0 30px; }
 
 .post-header h1 {
-  font-size: 42px;
-  letter-spacing: -1.75px;
+  font-size: 35px;
+  letter-spacing: -.75px;
   line-height: 1;
   font-weight: 300;
+  font-family: "PT Sans";
+  color: #6A1B1D;
 }
 
 .post-header .meta {
