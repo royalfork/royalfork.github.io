@@ -1,0 +1,13 @@
+<div class="post">
+
+  <header class="post-header">
+    <span class="post-date">{{ post.date | date: "%b %-d, %Y" }}</span>
+    <h1>{{ post.title }}</h1>
+    <p class="meta">{{ page.date | date: "%b %-d, %y" }}{% if page.author %} • {{ page.author }}{% endif %}{% if page.meta %} • {{ page.meta }}{% endif %}</p>
+  </header>
+
+  <article class="post-content">
+  {{ post.content }}
+  </article>
+
+</div>
