@@ -43,7 +43,7 @@ body {
   background-color: #fdfdfd;
 }
 
-h1, h2, h3, h4, h5, h6 { font-size: 100%; font-weight: 400; }
+h1, h2, h3, h4, h5, h6 { font-size: 100%; font-family: "PT Sans"}
 
 a         { color: #2a7ae2; text-decoration: none; }
 a:hover   { color: #000; text-decoration: underline; }
@@ -170,6 +170,21 @@ a:visited { color: #205caa; }
 }
 
 
+/* Sidebar styles *
+ */
+.sidebar-content {
+  margin: 30px 0 0 20px;
+}
+
+.sidebar-content h2 {
+  font-size: 22px;
+}
+
+.sidebar-content ul {
+  list-style: none;
+  padding-left: 15px;
+}
+
 /* Page Content styles */
 /* ----------------------------------------------------------*/
 
@@ -184,7 +199,6 @@ a:visited { color: #205caa; }
 
 .sidebar {
   float: right;
-  background-color: orange;
 }
 
 /* Mobile */
@@ -201,7 +215,6 @@ a:visited { color: #205caa; }
   }
 
   body .sidebar {
-    background-color: green;
     width: 275px;
   }
 }
@@ -213,7 +226,6 @@ a:visited { color: #205caa; }
   }
 
   body .sidebar {
-    background-color: blue;
     width: 25%;
   }
 }
