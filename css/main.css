@@ -225,7 +225,7 @@ a:visited { color: #205caa; }
 
 .posts { list-style-type: none; }
 
-.posts li { margin-bottom: 30px; }
+.posts li + li { margin-top: 50px; }
 
 .posts .post-link {
   font-size: 24px;
