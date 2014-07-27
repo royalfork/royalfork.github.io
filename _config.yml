@@ -1,11 +1,10 @@
 # Site settings
 title: The Royal Fork
-email: your-email@domain.com
-description: "Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description."
+email: rf@royalforkblog.com
+description: "A blog recording my journey down the Bitcoin rabbit hole."
 baseurl: ""
-url: "http://yourdomain.com"
-twitter_username: jekyllrb
-github_username:  jekyll
+url: "http://www.royalforkblog.com"
+twitter_username: royalforkblog
 
 # Build settings
 markdown: kramdown
