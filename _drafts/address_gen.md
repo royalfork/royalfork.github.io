@@ -1,3 +1,7 @@
+---
+title: Address generation
+---
+
 In this tutorial, we'll be creating our own Bitcoin addresses in Ruby.  The easy way involves using the bitcoin-rb gem and calling:
 
 but that doesn't teach us much; and tt's actually not that hard to implement with basic hashing and elliptic curve cryptography libraries.
