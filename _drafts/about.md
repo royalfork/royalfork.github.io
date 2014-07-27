@@ -12,21 +12,33 @@ I think this serves as a decent metaphor for bitcoin.  Like the knight, Bitcoin 
 
 I'm a programmer by trade, but have always been interested in banking, economics, and politics.  Bitcoin is *the* intersection of all the things I love and am passionate about.  This blog will follow my personal journey as I learn more and more about Bitcoin, in all it's facets.
 
-In the next months, I hope to cover:
+In the next months, I hope to cover, among other things:
 
 - Deep technical dive into the core protocol 
-    - make your own wallet software, 
-    - broadcast transcations, navigate the blockchain, program contracts, etc.)
+  - Make your own wallet software
+  - Broadcast transcations
+  - Navigate the blockchain
+  - Program contracts
 
-- Describe our current monetary system  (investigate the relationship between banks and government, compare monetary policies of different nation states, define the money supply and describe how it works, etc)
+- Describe our current monetary system
+  - Outline history of government monetary regulation
+  - Compare monetary policies of different nation states
+  - Define the money supply and describe how it works
 
-- History of Money (how did our monetary policy evolved to where it is today?, what lessons can we learn from both good and bad monetary policy?, etc.)
+- History of Money
+  - How did our monetary policy evolve to where it is today?
+  - What lessons can we learn from both good and bad monetary policy?
 
-- Game Theory and Bitcoin (what scenarios are good for bitcoin, how to go mainstream, economics of bitcoin mining)
+- Game Theory and Bitcoin
+  - What scenarios are good for bitcoin? 
+  - How does Bitcoin go mainstream?
+  - Economics of bitcoin mining
 
 If you have any other ideas for posts, questions, or comments, feel free to contact me on Twitter: twitter
 or by email: [email]
 
 To the moon.
 
---j
+-- rf
+
+PS:  I own bitcoin, and have gotten paid exclusively in bitcoin for most of 2014.

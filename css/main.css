@@ -338,6 +338,14 @@ a:visited { color: #205caa; }
 .post ul,
 .post ol { margin-left: 1.35em; }
 
+.post ul li {
+  margin-top: 0;
+}
+
+.post ul li + li {
+  margin-top: 10px;
+}
+
 .post pre code {
   border: 0;
   padding-right: 0;
