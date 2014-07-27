@@ -61,6 +61,10 @@ a:visited { color: #205caa; }
   zoom: 1;
 }
 
+.center {
+  text-align: center;
+}
+
 
 /* Layout Styles */
 /* ----------------------------------------------------------*/
@@ -338,6 +342,11 @@ a:visited { color: #205caa; }
   border: 0;
   padding-right: 0;
   padding-left: 0;
+}
+
+.post .image p {
+  font-size: .9em;
+  font-style: italic;
 }
 
 /* terminal */

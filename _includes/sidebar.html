@@ -1,0 +1,10 @@
+<div class="sidebar-content">
+  <h2>The Archives:</h2>
+  <ul>
+    {% for post in site.posts %}
+      <li>
+        <a class="post-link" href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a>
+      </li>
+    {% endfor %}
+  </ul>
+</div>
