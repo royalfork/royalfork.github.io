@@ -3,9 +3,6 @@ title: Tutorial - Address Generation
 ---
 
 TODO
-  - add links for further reading
-    - links are of the form:
-      <a src="source/path/page">Description of link | source</a>
   - styles for header text and notes
   - read through, edit.
 
@@ -201,4 +198,17 @@ pub_addr = pub_key_hash_and_version_and_checksum.to_base58
 
 We can now share this address with our friends, convert it to a QR code, get it tatooed on our bodies, and watch the bitcoins rush in.
 
+===
+
 Download the code [here](/assets/data/address-gen.rb).
+
+References/Additional Reading
+
+- [Andreas Antonopoulos on Bitcoin Wallet Encryption &#124; youtube.com](https://www.youtube.com/watch?v=PdGRmshPXdo)
+- [Generating a Bitcoin Address with JavaScript &#124; procbits.com](http://procbits.com/2013/08/27/generating-a-bitcoin-address-with-javascript)
+- [Elliptic Curve Crtyptography &#124; wikipedia.org](https://en.wikipedia.org/wiki/Elliptic_curve_cryptography)
+- [Introducing Ruby ECDSA Gem &#124; davidgrayson.com](http://blog.davidegrayson.com/2014/04/introducing-ruby-ecdsa-gem.html)
+- [Ruby ECDSA &#124; github.com](https://github.com/DavidEGrayson/ruby_ecdsa)
+- [Why does Bitcoin use 2 hash functions? &#124; stackexchange.com](https://bitcoin.stackexchange.com/questions/9202/why-does-bitcoin-use-two-hash-functions-sha-256-and-ripemd-160-to-create-an-ad)
+- [List of Address Prefixes &#124; bitcoin.it](https://en.bitcoin.it/wiki/List_of_address_prefixes)
+- [Technical Background of Bitcoin Addresses](https://en.bitcoin.it/wiki/Technical_background_of_Bitcoin_addresses)
