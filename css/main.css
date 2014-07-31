@@ -65,6 +65,24 @@ a:visited { color: #205caa; }
   text-align: center;
 }
 
+.x-scroll {
+  overflow-x: auto;
+}
+
+.no-list {
+  list-style: none; 
+}
+
+.note {
+  color: #8a6d3b;
+  background-color: #fcf8e3;
+  border-color: #faebcc;
+  padding: 15px;
+  margin-bottom: 20px;
+  border: 1px solid transparent;
+  border-radius: 4px;
+}
+
 
 /* Layout Styles */
 /* ----------------------------------------------------------*/
@@ -296,6 +314,12 @@ a:visited { color: #205caa; }
 .post-content h4 {
   font-size: 20px;
   letter-spacing: -1px;
+}
+
+.post-content h6 {
+  font-style: italic;
+  font-size: 1.1em;
+  font-weight: normal;
 }
 
 .post-content blockquote {
