@@ -207,7 +207,7 @@ a:visited { color: #205caa; }
   padding-left: 15px;
 }
 
-/* Page Content styles */
+/* Page Layout styles */
 /* ----------------------------------------------------------*/
 
 .page-content {
@@ -244,11 +244,11 @@ a:visited { color: #205caa; }
 /* Widescreen */
 @media (min-width: 1201px) {
   body .page-content {
-    width: 90%;
+    width: 80%;
   }
 
   body .sidebar {
-    width: 10%;
+    width: 20%;
   }
 }
 
