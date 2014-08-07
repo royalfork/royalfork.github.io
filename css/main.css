@@ -259,14 +259,14 @@ a:visited { color: #205caa; }
 
 .posts li + li { margin-top: 50px; }
 
-.posts .post-link {
+.post .post-link {
   font-size: 24px;
   letter-spacing: -1px;
   line-height: 1;
   color: #6A1B1D;
 }
 
-.posts .post-date {
+.post .post-date {
   display: block;
   font-size: 15px;
   color: #818181;
