@@ -180,6 +180,8 @@ pub_key = leader + [pub_key_point.x.to_hex].pack("H*")
 # pub_key.to_hex => 03ee3b7337eb52d1e8bd7ee271db9aa43a67750ff483870ab2753d2e13922970db 
 {% endhighlight %}
 
+Why must the 2 y coordinates have unique parity?  Because the elliptic curve is over a prime finite field, when we change sign, we flip parity.  Illustrated simply, 5 modulus 7 = 5 is odd, but -5 modulus 7 = 2, which is even.
+
 We now have our public key.
 
 # Public Address
