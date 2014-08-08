@@ -1,0 +1,360 @@
+@font-face {
+  font-family: 'Droid Sans Mono';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Droid Sans Mono'), local('DroidSansMono'), url('droid_sans_ttf') format('truetype');
+}
+
+/* Private Key */
+
+.private {
+  background-color: #b7c9e1;
+  padding: 0 0 30px 0;
+  margin-bottom: 0px;
+}
+
+.private-key {
+  margin-left: 54px;
+}
+
+#passphrase {
+  width: 350px;
+  /* 520px = width of 64 hex chars */
+  /* (520 - 350) / 2 = 85 */ 
+  margin: 0 0 0 85px;
+}
+
+.wif-container {
+  margin-top: 85px;
+  margin-left: 38px;
+}
+
+.private-wif {
+  margin-left: 96px;
+}
+
+/* Public Key */
+
+.public {
+  background-color: #f4f7fa;
+  margin-top: 0px;
+}
+
+.public-equation {
+  display: inline-block;
+  position: relative;
+}
+
+.public-equation img {
+  width: 100px;
+  vertical-align: middle;
+}
+
+/*kpub*/
+.pub-key-label {
+  display: inline-block;
+  font-size: 30px;
+  margin-right: 25px;
+  font-style: italic;
+  position: relative;
+}
+
+.pub-key-label::after {
+  content: "pub";
+  display: inline-block;
+  font-size: 15px;
+  position: absolute;
+  bottom: -2px;
+}
+
+.public-key-split {
+  position: absolute;
+  top: -32px;
+  left: 15px;
+}
+
+.public-coords {
+  font-size: 14px;
+  margin-left: 50px;
+}
+
+.public-coord-x {
+  display: inline-block;
+  position: relative;
+}
+
+.public-coord-x:after {
+  content: "";
+  position: absolute;
+  height: 100px;
+  width: 80px;
+  position: absolute;
+  right: -85;
+  top: 10;
+  background-image: url("imgs/pub-x.svg");
+  background-repeat: no-repeat;
+}
+
+.public-coord-y {
+  margin-top: 10px;
+}
+
+.public-key {
+  position: relative;
+  margin-left: 54px;
+}
+
+.public-y-even-odd {
+  margin-left: 10px;
+}
+
+.public-key svg {
+  margin-left: 5px;
+}
+
+#parity-arrow {
+  margin-top: 30px;
+}
+
+svg.red line {
+  stroke: red;
+}
+
+svg.red polygon {
+  fill: red;
+  stroke: red;
+}
+
+svg.green line {
+  stroke: green;
+}
+
+svg.green polygon {
+  fill: green;
+  stroke: green;
+}
+
+/* Public Address */
+.public-address-container {
+  margin-top: 80px;
+  margin-left: 141px;
+}
+
+.ripe-hash {
+  margin-left: 104px;
+}
+
+.public-address {
+  text-transform: initial !important;
+  margin-left: 62px;
+}
+
+/* information label things */
+.information {
+  position: absolute;
+  width: 100px;
+  background-color: bisque;
+  font-size: 14px;
+  padding: 5px;
+  box-sizing: border-box;
+}
+
+.information .title {
+  font-weight: bolder; 
+  font-size: 16px;
+}
+
+.step1 {
+  right: -150px;
+  width: 125px;
+  bottom: 0;
+}
+.step2 {
+  width: 125px;
+  top: -75px;
+}
+
+.step3 {
+  width: 125px;
+  top: -75px;
+  right: 70px;
+}
+
+.step4 {
+  width: 370px;
+  top: -75px;
+  right: -305px;
+}
+
+.step5 {
+  top: 5px;
+  right: -225px;
+  width: 225px;
+}
+
+.step6 {
+  top: 35px;
+  right: -225px;
+  width: 200px;
+}
+
+.step7 {
+  top: 10px;
+  width: 515px;
+  left: -50px;
+}
+
+.step8 {
+  top: 0;
+  right: -225px;
+  width: 200px;
+}
+
+.step9 {
+  top: -75px;
+  width: 230px;
+  left: -95px;
+}
+
+.step10 {
+  top: -75px;
+  width: 175px;
+  right: -60px;
+}
+
+.step11 {
+  top: 0;
+  width: 200px;
+  right: -210px;
+}
+
+/*
+ *   /| -|
+ *  / |  | border-top
+ * /  | -| 
+ * \  | -|
+ *  \ |  | border-bottom
+ *   \| -| 
+ *
+ * |___|
+ *   | border-right
+ *
+ * Make sure height + width are 0
+ *
+ */
+.information::after {
+  content: "";
+  position: absolute;
+  font-size: 14px;
+}
+
+.information-arrow-left-bottom::after {
+  bottom: 5px;
+  left: -20px;
+  border-top: 10px solid transparent;
+  border-bottom: 10px solid transparent;
+  border-right: 20px solid bisque;
+}
+
+.information-arrow-left-middle::after {
+  bottom: 20px;
+  left: -20px;
+  border-top: 10px solid transparent;
+  border-bottom: 10px solid transparent;
+  border-right: 20px solid bisque;
+}
+
+.information-arrow-left-top::after {
+  top: 5px;
+  left: -20px;
+  border-top: 10px solid transparent;
+  border-bottom: 10px solid transparent;
+  border-right: 20px solid bisque;
+}
+
+.information-arrow-bottom-left::after {
+  left: 0px;
+  bottom: -20px;
+  border-top: 20px solid bisque;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+}
+
+.information-arrow-bottom-right::after {
+  right: 0px;
+  bottom: -20px;
+  border-top: 20px solid bisque;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+}
+
+.information-arrow-bottom-middle::after {
+  right: 50%;
+  bottom: -20px;
+  border-top: 20px solid bisque;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+}
+
+/*Utilities*/
+
+.section-header {
+  font-size: 18px !important;
+  letter-spacing: 0px !important;
+  margin-bottom: 10px;
+  padding: 5px;  
+}
+
+.container {
+  display: inline-block;
+  font-size: 0;
+  position: relative;
+}
+
+.container + .container {
+  margin-top: 20px;
+}
+
+.center {
+  text-align: center; 
+}
+
+/*Hex Part Things*/
+.version {
+  background-color: lightcoral;
+}
+
+.checksum {
+  background-color: gold;
+}
+
+.compression-flag {
+  background-color: lightpink;
+}
+
+.hex-container {
+  font-family: "Droid Sans Mono";
+  text-transform: uppercase;
+  font-size: 14px;
+  border: 1px solid #000;
+  display: inline-flex;
+  padding: 0;
+  background-color: #ffffff;
+}
+
+.hex-container > div, .hex-padding {
+  display: inline-block;
+  padding: 3px;
+}
+
+.hex-container > .hex-left {
+  padding: 3px 0 3px 3px;
+}
+
+.hex-container > .hex-middle {
+  padding: 3px 0;
+}
+
+.hex-container > .hex-right {
+  padding: 3px 3px 3px 0;
+}

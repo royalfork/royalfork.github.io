@@ -293,7 +293,10 @@ a:visited { color: #205caa; }
   margin-top: 5px;
 }
 
-.post-content { margin: 0 0 30px; }
+.post-content { 
+  margin: 0 0 30px; 
+  overflow-y: auto;
+}
 
 .post-content > * { margin: 20px 0; }
 

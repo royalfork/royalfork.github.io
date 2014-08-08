@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 16.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 width="622px" height="29.871px" viewBox="-3 -0.163 622 29.871" enable-background="new -3 -0.163 622 29.871"
+	 xml:space="preserve">
+<g id="XMLID_1_">
+	<g>
+		<polygon fill="#DAEAE8" points="619,2.274 526,27.271 88,27.271 -3,2.274 		"/>
+	</g>
+	<g>
+		<g>
+			<g>
+				<g>
+					<g>
+						
+							<line fill="none" stroke="#000000" stroke-width="2" stroke-miterlimit="10" x1="-0.796" y1="2.879" x2="85.796" y2="26.666"/>
+						<g>
+							<polygon points="2.147,7.204 -0.226,3.036 3.944,0.665 1.167,-0.098 -3,2.274 -0.628,6.441 							"/>
+						</g>
+						<g>
+							<polygon points="81.056,28.88 85.226,26.509 82.853,22.341 85.628,23.104 88,27.271 83.833,29.643 							"/>
+						</g>
+					</g>
+				</g>
+			</g>
+		</g>
+		<g>
+			<g>
+				<g>
+					<g>
+						
+							<line fill="none" stroke="#000000" stroke-width="2" stroke-miterlimit="10" x1="616.786" y1="2.844" x2="524.214" y2="26.701"/>
+						<g>
+							<polygon points="612.083,0.555 616.214,2.992 613.775,7.122 616.562,6.403 619,2.274 614.87,-0.163 							"/>
+						</g>
+						<g>
+							<polygon points="527.225,22.423 524.786,26.553 528.917,28.99 526.13,29.708 522,27.271 524.438,23.142 							"/>
+						</g>
+					</g>
+				</g>
+			</g>
+		</g>
+	</g>
+</g>
+<text transform="matrix(1 0 0 1 245.3208 21.1416)" font-family="'MyriadPro-Regular'" font-size="20">Base58 Encode</text>
+</svg>

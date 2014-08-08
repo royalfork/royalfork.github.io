@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 16.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 width="534px" height="52.375px" viewBox="0 0 534 52.375" enable-background="new 0 0 534 52.375" xml:space="preserve">
+<g id="XMLID_1_">
+	<g>
+		<polygon fill="#D8D9DD" points="534,0 526,25 8,25 0,0 		"/>
+	</g>
+	<g>
+		<g>
+			<g>
+				<line fill="none" stroke="#000000" stroke-width="2" stroke-miterlimit="10" x1="0" y1="0" x2="7.303" y2="22.823"/>
+				<g>
+					<polygon points="2.86,20.062 7.123,22.26 9.318,17.996 10.196,20.737 8,25 3.737,22.804 					"/>
+				</g>
+			</g>
+		</g>
+		<g>
+			<g>
+				<line fill="none" stroke="#000000" stroke-width="2" stroke-miterlimit="10" x1="526.696" y1="22.823" x2="534" y2="0"/>
+				<g>
+					<polygon points="531.141,20.062 526.877,22.26 524.682,17.996 523.804,20.737 526,25 530.263,22.804 					"/>
+				</g>
+			</g>
+		</g>
+	</g>
+</g>
+<text transform="matrix(1 0 0 1 234.3975 19.4927)" font-family="'MyriadPro-Regular'" font-size="20">SHA256</text>
+<g id="XMLID_2_">
+	<g>
+		<polygon fill="#EDEEF0" points="526,25 429,50 105,50 8,25 		"/>
+	</g>
+	<g>
+		<g>
+			<g>
+				<line fill="none" stroke="#000000" stroke-width="2" stroke-miterlimit="10" x1="8" y1="25" x2="102.787" y2="49.43"/>
+				<g>
+					<polygon points="98.083,51.719 102.214,49.282 99.775,45.152 102.563,45.87 105,50 100.871,52.438 					"/>
+				</g>
+			</g>
+		</g>
+		<g>
+			<g>
+				<line fill="none" stroke="#000000" stroke-width="2" stroke-miterlimit="10" x1="431.214" y1="49.43" x2="526" y2="25"/>
+				<g>
+					<polygon points="435.917,51.719 431.786,49.282 434.225,45.152 431.438,45.87 429,50 433.13,52.438 					"/>
+				</g>
+			</g>
+		</g>
+	</g>
+</g>
+<text transform="matrix(1 0 0 1 233.7075 44.8672)" font-family="'MyriadPro-Regular'" font-size="20">RIPE160</text>
+</svg>

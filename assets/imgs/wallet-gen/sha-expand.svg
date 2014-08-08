@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 16.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 width="519.98px" height="29px" viewBox="-4.25 -119.25 519.98 29" enable-background="new -4.25 -119.25 519.98 29"
+	 xml:space="preserve">
+<g>
+	<polygon fill="#D8D9DD" points="515.596,-92.75 -4.386,-92.75 74.75,-117.749 436.75,-117.749 	"/>
+	<g>
+		<line fill="none" x1="80.75" y1="-117.749" x2="-4.386" y2="-92.75"/>
+		<g>
+			<g>
+				<g>
+					
+						<line fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" x1="74.75" y1="-117.749" x2="-2.206" y2="-93.438"/>
+					<g>
+						<polygon points="0.571,-97.872 -1.643,-93.617 2.614,-91.405 -0.131,-90.538 -4.386,-92.75 -2.174,-97.004 						"/>
+					</g>
+				</g>
+			</g>
+		</g>
+	</g>
+	<g>
+		<line fill="none" x1="430.75" y1="-117.749" x2="515.73" y2="-67.749"/>
+		<g>
+			<g>
+				<g>
+					
+						<line fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" x1="436.75" y1="-117.749" x2="513.417" y2="-93.441"/>
+					<g>
+						<polygon points="508.595,-91.413 512.854,-93.62 510.645,-97.877 513.389,-97.007 515.596,-92.75 511.339,-90.543 						"/>
+					</g>
+				</g>
+			</g>
+		</g>
+	</g>
+</g>
+<text transform="matrix(1 0 0 1 222.7905 -98.6318)" font-family="'MyriadPro-Regular'" font-size="20">SHA256</text>
+</svg>

@@ -1,3 +1,11 @@
+{% for css in post.css %}
+  <link rel="stylesheet" href="{{ css | prepend: site.baseurl }}">
+{% endfor %}
+
+{% for js in post.js %}
+  <script src="{{ js | prepend: site.baseurl }}" type="text/javascript" charset="utf-8"></script>
+{% endfor %}
+
 <div class="post">
 
   <header class="post-header">
