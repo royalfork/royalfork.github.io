@@ -2,15 +2,32 @@
 <!-- Generator: Adobe Illustrator 16.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
 <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-	 width="77.808px" height="95.206px" viewBox="0 0 77.808 95.206" enable-background="new 0 0 77.808 95.206" xml:space="preserve">
-<line fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" x1="1.204" y1="1.466" x2="76.204" y2="1.466"/>
-<line fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" x1="76.204" y1="1.466" x2="76.204" y2="91.466"/>
+	 width="80.874px" height="139.735px" viewBox="0 0 80.874 139.735" enable-background="new 0 0 80.874 139.735"
+	 xml:space="preserve">
 <g>
 	<g>
+		<line fill="none" stroke="#000000" stroke-width="2" stroke-miterlimit="10" x1="0" y1="1.219" x2="6" y2="1.219"/>
 		
-			<line fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" x1="76.204" y1="91.466" x2="3.49" y2="91.466"/>
+			<line fill="none" stroke="#000000" stroke-width="2" stroke-miterlimit="10" stroke-dasharray="12.9524,3.2381" x1="9.238" y1="1.219" x2="72.381" y2="1.219"/>
+		<line fill="none" stroke="#000000" stroke-width="2" stroke-miterlimit="10" x1="74" y1="1.219" x2="80" y2="1.219"/>
+	</g>
+</g>
+<g>
+	<g>
+		<line fill="none" stroke="#000000" stroke-width="2" stroke-miterlimit="10" x1="80" y1="1.219" x2="80" y2="7.219"/>
+		
+			<line fill="none" stroke="#000000" stroke-width="2" stroke-miterlimit="10" stroke-dasharray="12,3" x1="80" y1="10.219" x2="80" y2="128.719"/>
+		<line fill="none" stroke="#000000" stroke-width="2" stroke-miterlimit="10" x1="80" y1="130.219" x2="80" y2="136.219"/>
+	</g>
+</g>
+<g>
+	<g>
+		<line fill="none" stroke="#000000" stroke-width="2" stroke-miterlimit="10" x1="80" y1="136.219" x2="74" y2="136.219"/>
+		
+			<line fill="none" stroke="#000000" stroke-width="2" stroke-miterlimit="10" stroke-dasharray="12.517,3.1292" x1="70.871" y1="136.219" x2="9.851" y2="136.219"/>
+		<line fill="none" stroke="#000000" stroke-width="2" stroke-miterlimit="10" x1="8.286" y1="136.219" x2="2.286" y2="136.219"/>
 		<g>
-			<polygon points="7.474,88.075 4.081,91.466 7.474,94.856 4.595,94.856 1.204,91.466 4.595,88.075 			"/>
+			<polygon points="6.27,132.828 2.877,136.219 6.27,139.609 3.391,139.609 0,136.219 3.391,132.828 			"/>
 		</g>
 	</g>
 </g>

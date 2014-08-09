@@ -17,6 +17,28 @@
   margin-left: 54px;
 }
 
+.private-key .pk::after, .public-key .ripe160::after {
+  content: "";
+  position: absolute;
+  height: 90px;
+  width: 10px;
+  background-image: url(/assets/imgs/wallet-gen/dash-down.svg);
+  background-repeat: no-repeat;
+  left: 50%;
+  top: 75px;
+}
+
+.private-key .pk::before {
+  content: "";
+  position: absolute;
+  height: 304px;
+  width: 304px;
+  background-image: url(/assets/imgs/wallet-gen/pk-pub.svg);
+  background-repeat: no-repeat;
+  top: 60px;
+  left: -40px; 
+}
+
 #passphrase {
   width: 350px;
   /* 520px = width of 64 hex chars */
@@ -86,12 +108,11 @@
 .public-coord-x:after {
   content: "";
   position: absolute;
-  height: 100px;
+  height: 150px;
   width: 80px;
-  position: absolute;
-  right: -85;
-  top: 10;
-  background-image: url("imgs/pub-x.svg");
+  right: -82px;
+  top: 15px;
+  background-image: url("/assets/imgs/wallet-gen/pub-x.svg");
   background-repeat: no-repeat;
 }
 
@@ -113,7 +134,7 @@
 }
 
 #parity-arrow {
-  margin-top: 30px;
+  margin: -7px 0 -4px 7px;
 }
 
 svg.red line {

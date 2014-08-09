@@ -72,23 +72,19 @@ css:
 
 <div class="public-key">
 <div>
-  <div>
-
-    <svg id="parity-arrow" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-       width="573.125px" height="33px" viewBox="0 0 573.125 33" enable-background="new 0 0 573.125 33" xml:space="preserve">
-    <line fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" x1="570.125" y1="3" x2="570.125" y2="18"/>
-    <line fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" x1="570.125" y1="18" x2="5.125" y2="18"/>
+  <svg id="parity-arrow" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+    width="568.875px" height="75px" viewBox="0 0 568.875 75" enable-background="new 0 0 568.875 75" xml:space="preserve">
+  <line fill="none" stroke="#000000" stroke-width="2" stroke-miterlimit="10" x1="568" y1="0" x2="568" y2="60"/>
+  <line fill="none" stroke="#000000" stroke-width="2" stroke-miterlimit="10" x1="568" y1="60" x2="3" y2="60"/>
+  <g>
     <g>
+      <line fill="none" stroke="#000000" stroke-width="2" stroke-miterlimit="10" x1="3" y1="60" x2="3" y2="72.714"/>
       <g>
-        
-          <line fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" x1="5.125" y1="18" x2="5.125" y2="30.714"/>
-        <g>
-          <polygon points="1.734,26.73 5.125,30.123 8.516,26.73 8.516,29.609 5.125,33 1.734,29.609 			"/>
-        </g>
+        <polygon points="-0.391,68.73 3,72.123 6.391,68.73 6.391,71.609 3,75 -0.391,71.609 			"/>
       </g>
     </g>
-    </svg>
-  </div>
+  </g>
+  </svg>
   <div class="hex-container">
     <div class="public-key-x-lead hex-left"></div>
     <div class="public-key-x hex-right"></div>
