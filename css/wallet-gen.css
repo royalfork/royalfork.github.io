@@ -95,9 +95,21 @@
   left: 15px;
 }
 
+.public-key-x {
+  width: 512px;
+}
+
+.public-key-x-lead {
+  /*visibility: hidden;*/
+}
+
 .public-coords {
   font-size: 14px;
   margin-left: 50px;
+}
+
+.public-coords .hex-container {
+  width: 512px;
 }
 
 .public-coord-x {
@@ -135,6 +147,7 @@
 
 #parity-arrow {
   margin: -7px 0 -4px 7px;
+  visibility: hidden;
 }
 
 svg.red line {
@@ -165,9 +178,21 @@ svg.green polygon {
   margin-left: 104px;
 }
 
+.ripe160 {
+  width: 320px;
+}
+
 .public-address {
   text-transform: initial !important;
   margin-left: 62px;
+}
+
+.address-checksum {
+  width: 64px;
+}
+
+.public-address {
+  width: 272px;
 }
 
 /* information label things */

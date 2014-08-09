@@ -4,7 +4,8 @@ var zeroes = "000000000000000000000000000000000000000000000000000000000000000000
 
 function init() {
   $("#passphrase").on("input", passphraseChanged);
-  passphraseChanged({"currentTarget":{"value":"test"}});
+  //passphraseChanged({"currentTarget":{"value":"test"}});
+  passphraseChanged();
 }
 
 function passphraseChanged (evt) {
@@ -36,7 +37,11 @@ function displayPublicKeyAndAddress (hx) {
     $(".public-x").text(pubKey.x.toString());
     $(".public-y").text(pubKey.y.toString());
 
+    // unhide things from invalid key
     $(".public-y-even-odd").show();
+    $("#parity-arrow").css("visibility", "visible");
+    $(".public-key-x-lead").css("visibility", "visible");
+
     var pub_key;
     if (pubKey.yParity === "even") {
       $(".public-y-even-odd").text("is EVEN.");
@@ -61,11 +66,22 @@ function displayPublicKeyAndAddress (hx) {
     displayPublicAddress(pub_key);
 
   } else {
-    $(".public-x").removeClass("hex-container");
-    $(".public-y").removeClass("hex-container");
+    // set up for when key is invalid
     $(".public-y-even-odd").hide();
+    $("#parity-arrow").css("visibility", "hidden");
     $(".public-x").text("n/a");
     $(".public-y").text("n/a");
+
+    $(".public-key-x-lead").text("N/");
+    $(".public-key-x-lead").css("background-color", "white");
+    $(".public-key-x").text("A");
+
+
+    $(".ripe160.hex-padding").text("N/A");
+    $(".ripe160.hex-middle").html("&nbsp;N/A");
+
+    $(".address-checksum").text("");
+    $(".public-address").text("N/A");
   }
 }
 

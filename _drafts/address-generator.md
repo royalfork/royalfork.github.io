@@ -86,8 +86,8 @@ css:
   </g>
   </svg>
   <div class="hex-container">
-    <div class="public-key-x-lead hex-left"></div>
-    <div class="public-key-x hex-right"></div>
+    <div class="public-key-x-lead hex-left">N/</div>
+    <div class="public-key-x hex-right">A</div>
   </div>
 
   <div class="information step7"><span class="title">7.</span> Use parity of y coordinate and full x coordinate to represent the public key.</div>
@@ -97,7 +97,7 @@ css:
   <div class="container">
     <img class="address-hash" src="/assets/imgs/wallet-gen/address-hash.svg" />
     <div class="ripe-hash">
-      <div class="ripe160 hex-container hex-padding"></div>
+      <div class="ripe160 hex-container hex-padding">N/A</div>
     </div>
     <div class="information step8 information-arrow-left-top"><span class="title">8.</span> Hash public key twice.  This obfuscates the public key and shortens it.</div>
   </div>
@@ -118,7 +118,7 @@ css:
     <div class="container">
       <img src="/assets/imgs/wallet-gen/base58-address.svg" />
       <div>
-        <div class="hex-container hex-padding public-address"></div>
+        <div class="hex-container hex-padding public-address">N/A</div>
       </div>
       <div class="information information-arrow-left-top step11"><span class="title">11.</span> After another base58 encoding, we have our public address :)</div>
     </div>
