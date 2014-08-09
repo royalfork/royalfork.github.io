@@ -319,6 +319,10 @@ svg.green polygon {
 
 /*Utilities*/
 
+.public, .private {
+  min-width: 980px;
+}
+
 .section-header {
   font-size: 18px !important;
   letter-spacing: 0px !important;
