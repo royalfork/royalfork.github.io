@@ -72,7 +72,7 @@ css:
 
 <div class="public-key">
 <div>
-  <svg id="parity-arrow" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+  <svg version="1.1" id="parity-arrow" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
     width="568.875px" height="75px" viewBox="0 0 568.875 75" enable-background="new 0 0 568.875 75" xml:space="preserve">
   <line fill="none" stroke="#000000" stroke-width="2" stroke-miterlimit="10" x1="568" y1="0" x2="568" y2="60"/>
   <line fill="none" stroke="#000000" stroke-width="2" stroke-miterlimit="10" x1="568" y1="60" x2="3" y2="60"/>
