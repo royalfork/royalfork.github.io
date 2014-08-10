@@ -1,5 +1,5 @@
 ---
-title: Address Generator
+title: Graphical Address Generator
 js: 
   - /js/btc.min.js
   - /js/wallet-gen.js 
@@ -7,6 +7,7 @@ css:
   - /css/wallet-gen.css
 ---
 
+<div>This was built for academic purposes.  If you want a secure wallet, read <a href="https://en.bitcoin.it/wiki/Paper_wallet" target="_blank">this.</a></div>
 <div class="private">
 <h2 class="section-header">Generate Private Key</h2>
 <div class="private-key">
