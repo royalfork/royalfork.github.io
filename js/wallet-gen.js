@@ -45,16 +45,16 @@ function displayPublicKeyAndAddress (hx) {
     var pub_key;
     if (pubKey.yParity === "even") {
       $(".public-y-even-odd").text("is EVEN.");
-      $(".public-y-even-odd").css("color", "green");
+      $(".public-y-even-odd").css("color", "forestgreen");
       $(".public-key-x-lead").text("02");
-      $(".public-key-x-lead").css("background-color", "green");
+      $(".public-key-x-lead").css("background-color", "forestgreen");
       $("#parity-arrow").attr("class", "green");
       pub_key = "02";
     } else {
       $(".public-y-even-odd").text("is ODD.");
-      $(".public-y-even-odd").css("color", "red");
+      $(".public-y-even-odd").css("color", "firebrick");
       $(".public-key-x-lead").text("03");
-      $(".public-key-x-lead").css("background-color", "red");
+      $(".public-key-x-lead").css("background-color", "firebrick");
       $("#parity-arrow").attr("class", "red");
       pub_key = "03";
     }
