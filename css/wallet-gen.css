@@ -2,7 +2,7 @@
   font-family: 'Droid Sans Mono';
   font-style: normal;
   font-weight: 400;
-  src: local('Droid Sans Mono'), local('DroidSansMono'), url('droid_sans_ttf') format('truetype');
+  src: local('Droid Sans Mono'), local('DroidSansMono'), url('/assets/fonts/droid_sans.ttf') format('truetype');
 }
 
 /* Private Key */
@@ -99,8 +99,8 @@
   width: 512px;
 }
 
-.public-key-x-lead {
-  /*visibility: hidden;*/
+.public-key-container {
+  width: 534px;
 }
 
 .public-coords {
@@ -385,7 +385,7 @@ svg.green polygon {
 .hex-container {
   font-family: "Droid Sans Mono";
   text-transform: uppercase;
-  font-size: 14px;
+  font-size: 0px;
   border: 1px solid #000;
   display: inline-flex;
   padding: 0;
@@ -395,16 +395,20 @@ svg.green polygon {
 .hex-container > div, .hex-padding {
   display: inline-block;
   padding: 3px;
+  font-size: 14px;
 }
 
 .hex-container > .hex-left {
+  font-size: 14px;
   padding: 3px 0 3px 3px;
 }
 
 .hex-container > .hex-middle {
+  font-size: 14px;
   padding: 3px 0;
 }
 
 .hex-container > .hex-right {
+  font-size: 14px;
   padding: 3px 3px 3px 0;
 }

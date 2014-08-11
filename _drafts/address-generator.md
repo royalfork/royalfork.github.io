@@ -86,7 +86,7 @@ css:
     </g>
   </g>
   </svg>
-  <div class="hex-container">
+  <div class="hex-container public-key-container">
     <div class="public-key-x-lead hex-left">N/</div>
     <div class="public-key-x hex-right">A</div>
   </div>

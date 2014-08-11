@@ -143,4 +143,4 @@ function base58 (hx) {
   return Bitcoin.Base58.encode(hx);
 }
 
-window.onload = init;
+$(document).ready(init);
