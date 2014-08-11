@@ -104,7 +104,7 @@
 }
 
 .public-coords {
-  font-size: 14px;
+  font-size: 10pt;
   margin-left: 50px;
 }
 
@@ -200,7 +200,7 @@ svg.green polygon {
   position: absolute;
   width: 100px;
   background-color: bisque;
-  font-size: 14px;
+  font-size: 10pt;
   padding: 5px;
   box-sizing: border-box;
 }
@@ -291,7 +291,7 @@ svg.green polygon {
 .information::after {
   content: "";
   position: absolute;
-  font-size: 14px;
+  font-size: 10pt;
 }
 
 .information-arrow-left-bottom::after {
@@ -395,20 +395,20 @@ svg.green polygon {
 .hex-container > div, .hex-padding {
   display: inline-block;
   padding: 3px;
-  font-size: 14px;
+  font-size: 10pt;
 }
 
 .hex-container > .hex-left {
-  font-size: 14px;
+  font-size: 10pt;
   padding: 3px 0 3px 3px;
 }
 
 .hex-container > .hex-middle {
-  font-size: 14px;
+  font-size: 10pt;
   padding: 3px 0;
 }
 
 .hex-container > .hex-right {
-  font-size: 14px;
+  font-size: 10pt;
   padding: 3px 3px 3px 0;
 }
