@@ -1,0 +1,173 @@
+Elliptic Curve Crypto for Mere Mortals
+Layman's Guide to Elliptic Curve Crypto
+
+Preface
+	- we'll only touch ECC how it relates to bitcoin
+	- encryption/decryption vs sign/verify
+	- pool analogy
+
+Motivation
+	What are we trying to achive?
+		why trapdoor functions are useful.
+		what mathematical properties do we need?
+
+	Example of how "easy" math can get us there. 
+		- (easy math does signature)
+	Why the easy example no longer works
+
+Finite Field Primer
+	why use finite fields?
+		- floats aren't precise
+		- sometimes, the math is easier
+	clock analogy
+	explain modular inverse
+
+Elliptic Curve Arithmetic
+	Define our curve - what do the parameters mean?
+	what is a generator point
+	Intro to elliptic curve arithmetic
+		(use really basic example with small numbers)
+		show graph without finite field
+		show graph with finite field
+	The "real magic" is the divide/conquer algorithm
+	why is this a trapdoor function
+
+Creating a signature
+	what does the signature do? (in easy english)
+	what does the verification do? (in easy english)
+	show the algorithm?
+
+===
+
+I've read several research papers, a book, listened to 4 university lectures, spent many hours on IRC, developed full featured elliptic curve libraries in 2 seperate languages, and built my own elliptic curve graphing framework to finally understand how elliptic curves actually work.  As one of the fundamental crypto systems which makes Bitcoin a "crypto"-currency, I really wanted to understand the underlying techical aspects which make elliptic curve cryptography secure.  In this post, I'll walk you through the big picture concepts I've accumulated over the course of my studies; and illuminate some of the "magic" that makes Bitcoin work.
+
+
+Elliptic curve cryptography is really cool.  Before researching this subject, "elliptic curves" conjured images of weird geometry or complex calculus that we've long since repressed from our memories.  Cryptography is that mysterious mairrage of advanced math and computer science which even the best of the best regularly get wrong (Apple, Google, Facebook, Sony and countless others have all been victims to embarassing cryptography mishaps).    It's actually really cool.
+
+, the reward is greatWhile there are parts of ECC which are complex and intricate, 
+
+Intro to Digital Signatures
+
+We need somehing that lets you say "I approve of this message."  In the physical world, when Alice writes her unique scribble on a contract or bank check, Bob *knows* that Alice has "approved the message"; as no one besides Alice can produce that scribble.  In the digital world, everything exists as 0's and 1's which can be trivially copied.  How might Alice "sign" something in the digital world such that Bob can be sufficiently confident that Alice has "approved the message"?
+
+The answer is public key cryptography.  Alice has:
+	- A private key - sequence of numbers that only Alice knows
+	- A public key - another sequence of numbers that Alice can share with anyone
+	- a message that she wants to "approve"
+
+Our "approval verification" or digital signature system will have the following algorithms:
+	To sign:
+	Message1 + Private Key(alice) = Signature(message1, alice)
+	
+	To verify:
+	Message1 + Signature(message1, alice) + Public Key(alice) = True
+
+	If any of these parts are changed, the signature is not authentic for that message.
+
+	Message1 + Signature(message1, chuck) + Public Key(alice) = False
+	Message1 + Signature(message1, alice) + Public Key(chuck) = False
+	Message2 + Signature(message1, alice) + Public Key(alice) = False
+
+
+Elliptic Curve Arithmetic
+
+So let's jump right in.  This is an elliptic curve.
+
+(pic of empty elliptic curve)
+
+Elliptic curves have the equation y^2 = x^3 = ax + b.  The point (x, y) is on this curve because it satisfies the equation.
+
+To add 2 points on the curve, we:
+	1.  draw a line between them
+	2.  Find where the line intersects the curve
+	3.  reflect the intersection over the y axis.
+
+(pic of above steps with info.  set fixed point.  let users click other points on the line to graphically show addition)
+
+The real magic of elliptic curves is in this next step.  We can "double" points by:
+	1.  Draw tangent line
+	2.  Find where the line intersects the curve
+	3.  reflect the intersection over the y axis.
+
+(pic of above steps with info.  let users click other points on the line to graphically show doubling)
+
+Finite fields
+
+Discuss motivation of the prime field, and how it works.
+
+Notes:
+	- there are too many points to be enumerable
+	- every point on the curve is "reachable" from the generator point
+	- the total number of points must be prime
+
+===========
+
+New Outline:
+
+Intro
+Graphical Interactive Arithmetic (really only useful for the equations it gives us)
+Finite Field (basically, go through all the points in teh elliptic curves portion below) 
+	- modular clock example
+	- how this is totally different, completely empty graph and we don't know the points
+	- show how generator is used to create points
+	- enumerate the points, and show that the equations above actually work
+Signature
+	- big idea
+	- example
+Relation to bitcoin, misc wrapping up info
+
+
+The Signature
+
+Remember, a signature must do 2 things:
+	- prove that the signer did the signing
+	- prove that the thing the signer signed hasn't changed since the signer signed it.
+
+Elliptic curves :
+	- We start with a generator point on the elliptic curve.  
+	- We add the generator to itself anywhere between 1-XXXXXXX times, and this gives us a new point, which we'll call the "generated point".
+	- The number of times we add the generator point to itself is called the "generator multiplier"
+	- So: "Generated Point" = "Generator Multiplier" * "Generator"
+	- We can publicly share the "generated point" and the "generator", and it's practically impossible to figure out the "generator multiplier"
+	- We can add and multiply multiple "generator multiplier" values to achieve the same result.
+		12 * Generator 	= 4 * (3 * Generator)
+						= (10 * Generator) + (2 * Generator)
+						= 2 * (5 * Generator) + (2 * Generator)
+		and so on.
+
+The Signature
+
+In this description, I'm going to be using the phrases "public key" and "private key."  If you ever get confused, remember that they can be freely exchanged with the following:
+	private key = generator multiplier (this is an integer)
+	public key = generated point (this is a point, so has x and y coordinates)
+
+The big idea:
+	0. We have a signer, with a private key, a verifier, with the signer's public key, and a message
+	1. The signer randomly generates a new point, keeping this point's generator multiplier secret
+	2. The signer creates a "special pathway" to this new point (remember above how the same point can have many different representations?)
+
+	This pathway incorporates both the public key point and a hash of the message.
+		- Because it's practically impossible to generate a pathway incorporating the public key point without also knowing the private key. we can be confident that only the person who knows the private generator multiplier created the signature.
+		- Taking an existing signature and changing the message will also change the message hash.  This new hash will no longer be incorporated into the special pathway, and we'll know that the signature is invalid.
+
+	3.  The actual signature contains the "verification" point, and a "special pathway helper" number.
+	4.  the verifier uses the special pathway helper, the signer's public key, and the has of the message, to generate the "verification point".  
+
+Now, let's go through an example with actual numbers:
+
+(go through example)
+
+- The signer generates a point to act as his public key:
+	Public Key = Private Key * Generator Point
+- The signer generates a point to act as the "signature target"
+
+
+
+
+An analogy
+
+Imagine we have a billiards table. The cue ball always starts in the same place and you always hit it at the same angle. You make it bounce 25 times, it goes all over the place, and it's 26th bounce hits the left rail exactly 4.12553 inches down the table. Your "private key" is 26 (number of times the ball bounced), and your public key is 4.12553. You can tell the world "my special number is 4.12553" and it's really hard for others to figure out exactly how many times the cue ball bounced to get to that position.
+
+Why go through all this rigamaroll? It can prove that you, the holder of the private key 26, authored a particular message. Essentially, you write your message on the cue ball, send it bouncing down the table 26 times, and when the message/cue ball ends up 4.12553 inches down the table, people know it was you who wrote it. No one else can place the cue ball at that same spot.
+
+How does this relate to bitcoin? When someone sends you bitcoin, they say, "I give 5 bitcoins to the person who can hit the cue ball 4.12553 inches down the table". If you ever want to spend these coins, just write a similar message and send it on your cue ball, bouncing 26 times until it gets 4.12553 inches down the table.
