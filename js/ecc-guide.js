@@ -2,7 +2,40 @@
 var ec = {
   a: -3,
   b: 4,
-  p: 29
+  p: 29,
+  points: [
+    [-1, -1],
+    [0, 2],
+    [6, 17],
+    [22, 1],
+    [23, 3],
+    [2, 8],
+    [7, 6],
+    [17, 9],
+    [21, 3],
+    [13, 25],
+    [3, 15],
+    [19, 22],
+    [14, 26],
+    [28, 8],
+    [8, 17],
+    [15, 17],
+    [15, 12],
+    [8, 12],
+    [28, 21],
+    [14, 3],
+    [19, 7],
+    [3, 14],
+    [13, 4],
+    [21, 26],
+    [17, 20],
+    [7, 23],
+    [2, 21],
+    [23, 26],
+    [22, 28],
+    [6, 12],
+    [0, 27]
+  ]
 };
 
 // plot bounds
@@ -27,6 +60,12 @@ function resetPlot (elementId, clickHandler) {
   plots[elementId] = null;
   $(elementId).unbind("plotclick");
   return plotEC(elementId, clickHandler);
+}
+function resetFF (elementId, clickHandler) {
+  plots[elementId].destroy();
+  plots[elementId] = null;
+  $(elementId).unbind("plotclick");
+  return plotFF(elementId, clickHandler);
 }
 
 // in our config, we have a "starting point".  when user clicks on the curve, this graphically adds the clicked point with the starting point,
@@ -97,6 +136,118 @@ function showPointDouble (event, pos, item) {
   }
 }
 
+function showFFDouble (event, pos, item) {
+  // draw "modular lines" until we pass through compliment of target point 
+  // draw dashed line to our target point
+
+  if (item) {
+
+    var elementId ="#"+event.delegateTarget.id; 
+    var plot = resetFF(elementId, showFFDouble);
+
+    var x = item.datapoint[0];
+    var y = item.datapoint[1];
+    console.log("Clicked: " + x + ", " + y);
+
+    // figure out the double point using our existing points
+    var target = ffPointDouble(x,y);
+    var comp_target = [target[0], ec.p/2-(target[1]-ec.p/2)]
+    console.log("Comp target: " + comp_target[0] + ", " + comp_target[1]);
+
+    // calculate discrete slope of line
+    var disc_slope = (3 * (Math.pow(x,2)) + ec.a) * invmod(2*y, ec.p) % ec.p;
+    console.log("Slope: " + disc_slope);
+
+    // draw lines until we get to intersection point
+    var lines = [];
+    for (var i = 0; i < 14; i++) {
+      var line;
+      // for first line, point is point on plot
+      if (i === 0) {
+        line = pointSlope(x, y, disc_slope);
+      } else {
+        // after first line, we go in direction of the target point
+        var goRight = comp_target[0] > x;
+        console.log("Go Right: " + goRight);
+        // for negative slope
+        // if negative slope, and we go right, or positive slope and we go left
+        if ((goRight && disc_slope < 0) || (!goRight && disc_slope > 0)) {
+          line = pointSlope(lines[i-1].getX(-1), ec.p-1, disc_slope);
+        } else {
+          line = pointSlope(lines[i-1].getX(ec.p), 0, disc_slope);
+        }
+      }
+      lines.push(line);
+      plotLine(plot, line.getY, "orange");
+
+      // if this line passes through our target, we're done
+      if (Math.abs(line.getY(target[0]) - comp_target[1]) < .01) {
+        // draw dashed line from comp_target to target
+        return plotDashedVert(plot, target[0], comp_target[1], target[1]);
+      }
+    };
+  }
+}
+
+function pointSlope (x, y, slope) {
+  return {
+    getX: function(y_coord) {
+      return (y_coord - y + slope * x) / slope;
+    },
+    getY: function(x_coord) {
+      return slope * (x_coord - x) + y;
+    }
+  }
+}
+
+function ffPointDouble (x, y) {
+  for (var i = 0; i < ec.points.length; i++) {
+    if (ec.points[i][0] == x && ec.points[i][1] == y) {
+      var mult = i * 2;
+      return ec.points[mult % (ec.points.length)]
+    }
+  };
+  return false;
+}
+
+function invmod (e, et) {
+  x = extended_gcd(e, et);
+  if (x) {
+    return x % et
+  }
+  return console.log("Can't compute inverse mod: " + x + ", " + y);
+}
+
+function extended_gcd (a, b) {
+  var last_remainder = Math.abs(a);
+  var remainder = Math.abs(b);
+  var x = 0;
+  var last_x = 1;
+  var y = 1;
+  var last_y = 0;
+    
+  while (remainder != 0){
+    // do math
+    var new_remainder = last_remainder % remainder;
+    var quotient = Math.floor(last_remainder / remainder);
+    var new_x = last_x - quotient*x;
+    var new_y = last_y - quotient*y;
+
+    // update vars
+    last_remainder = remainder;
+    remainder = new_remainder;
+    last_x = x;
+    x = new_x;
+    last_y = y;
+    y = new_y;
+  }
+
+  if (last_remainder == 1) {
+    return last_x * (a < 0 ? -1 : 1);
+  }
+  return false;
+}
+
 // given x, y coordinates, calculate tangent line eqn
 // y = mx + b
 // tangent slope = (3x^2 + a) / 2y
@@ -140,25 +291,30 @@ function plotLine (plot, eq, color) {
 
 // eq will be an anonymous function with argument x which returns y
 function getLinePts (plot, eq) {
-  var plot_x_min = plot_config.x_min;
-  var plot_x_max = plot_config.x_max;
+  var plot_x_min = plot.getXAxes()[0].min;
+  var plot_x_max = plot.getXAxes()[0].max;
   var pos = [[plot_x_min, eq(plot_x_min)], [plot_x_max, eq(plot_x_max)]];
   return pos;
 }
 
 // returns points for x=x_int between y bounds and makes a dashed line
 function plotDashedVert (plot, x_int, y_max, y_min) {
-  var goesUp = y_max < y_min;
+  // make sure the order is right...it's easier to check here than from caller
+  if (y_min > y_max) {
+    var tmp = y_min;
+    y_min = y_max;
+    y_max = tmp;
+  }
 
-  var step = .2;
-  var subs = (y_max - y_min) / step;
+  var step = (plot.getYAxes()[0].max - plot.getYAxes()[0].min) / 40;
+  var subs = Math.abs(y_max - y_min) / step;
 
   for (var i = 0; i < subs; i = i + 2) {
     var y1 = y_max - (i*step);
     var y2 = y_max - ((i+1)*step);
     // make sure dash doesn't extend beyond curve
-    if (goesUp && y2 > y_max || !goesUp && y2 < y_min) {
-      y2 = goesUp ? y_max : y_min; 
+    if (y2 < y_min) {
+      y2 = y_min; 
     }
     var pos = [[x_int, y1], [x_int, y2]];
     plot.addPlot(pos, "#599ad3");
@@ -233,22 +389,55 @@ function ecYCoord (x) {
   return Math.sqrt(Math.pow(x, 3) + ec.a*x + ec.b);
 }
 
-function test () {
-  var math = MathJax.Hub.getAllJax("mathjax-addition")[0];
-  MathJax.Hub.Queue(["Text",math,"(1,4) + (5,7) = (0,2)"]);
+function plotFF (elementId, cb) {
+  var options = {
+    xaxis: {
+      min: 0,
+      max: ec.p - 1 
+    },
+    yaxis: {
+      min: 0,
+      max: ec.p - 1
+    },
+    grid: {
+      clickable: cb ? true : false,
+      hoverable: cb ? true : false
+    },
+    series: {
+      color: "blue",
+      lines: {
+        show: false
+      },
+      points: {
+        show: true,
+      }
+    }
+  };
+
+  plots[elementId] = $.plot(elementId, [ec.points], options);
+
+  if (cb) {
+    $(elementId).bind("plotclick", cb);
+  }
+
+  return plots[elementId];
 }
 
 
 window.onload = function() {
-  // the example ec
+  // example ec
   plotEC("#empty-ec");
 
-  // the ec which shows point addition
+  // ec which shows point addition
   plotEC("#ec-addition", showPointAddition);
   showPointAddition({delegateTarget: {id: "ec-addition"}}, {}, {datapoint: [1.9, 2.3]});
-  //showPointAddition()
-  //additionPlot.addPoint(plot_config.start_x, plot_config.start_y, "#1859a9");
+  //  ec which shows point doubling
   plotEC("#ec-double", showPointDouble);
   showPointDouble({delegateTarget: {id: "ec-double"}}, {}, {datapoint: [-0.8, 2.4]});
-  //showPointAddition({delegateTarget: {id: "ec-addition"}}, {}, {datapoint: [1.9, 2.3]});
+
+  // ff with points
+  plotFF("#ff-points");
+
+  // ff double
+  plotFF("#ff-double", showFFDouble);
 };
