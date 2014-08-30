@@ -196,20 +196,6 @@ svg.green polygon {
   width: 272px;
 }
 
-/* information label things */
-.information {
-  position: absolute;
-  width: 100px;
-  background-color: bisque;
-  font-size: 10pt;
-  padding: 5px;
-  box-sizing: border-box;
-}
-
-.information .title {
-  font-weight: bolder; 
-  font-size: 16px;
-}
 
 .step1 {
   right: -150px;
@@ -273,74 +259,6 @@ svg.green polygon {
   top: 0;
   width: 200px;
   right: -210px;
-}
-
-/*
- *   /| -|
- *  / |  | border-top
- * /  | -| 
- * \  | -|
- *  \ |  | border-bottom
- *   \| -| 
- *
- * |___|
- *   | border-right
- *
- * Make sure height + width are 0
- *
- */
-.information::after {
-  content: "";
-  position: absolute;
-  font-size: 10pt;
-}
-
-.information-arrow-left-bottom::after {
-  bottom: 5px;
-  left: -20px;
-  border-top: 10px solid transparent;
-  border-bottom: 10px solid transparent;
-  border-right: 20px solid bisque;
-}
-
-.information-arrow-left-middle::after {
-  bottom: 20px;
-  left: -20px;
-  border-top: 10px solid transparent;
-  border-bottom: 10px solid transparent;
-  border-right: 20px solid bisque;
-}
-
-.information-arrow-left-top::after {
-  top: 5px;
-  left: -20px;
-  border-top: 10px solid transparent;
-  border-bottom: 10px solid transparent;
-  border-right: 20px solid bisque;
-}
-
-.information-arrow-bottom-left::after {
-  left: 0px;
-  bottom: -20px;
-  border-top: 20px solid bisque;
-  border-left: 10px solid transparent;
-  border-right: 10px solid transparent;
-}
-
-.information-arrow-bottom-right::after {
-  right: 0px;
-  bottom: -20px;
-  border-top: 20px solid bisque;
-  border-left: 10px solid transparent;
-  border-right: 10px solid transparent;
-}
-
-.information-arrow-bottom-middle::after {
-  right: 50%;
-  bottom: -20px;
-  border-top: 20px solid bisque;
-  border-left: 10px solid transparent;
-  border-right: 10px solid transparent;
 }
 
 /*Utilities*/

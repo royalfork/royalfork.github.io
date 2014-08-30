@@ -45,6 +45,13 @@ var plot_config = {
   y_min: -4,
   y_max: 4,
   start_x: -2,
+  colors: {
+    pointA: "#a11d20",
+    pointB: "#1859a9",
+    sum: "#662c91",
+    primary: "#f2d1b0",
+    secondary: "#599ad3"
+  }
 };
 plot_config.start_y = ecYCoord(plot_config.start_x);
 
@@ -52,6 +59,52 @@ plot_config.start_y = ecYCoord(plot_config.start_x);
 //  plots[elementId] = flot object stored embedded in that elementId
 var plots = {};
 
+function showSignatureExample () {
+  // set the information (this is all generated from the ruby script)
+  //pk is: 7
+  //pubk: 17, 9
+  //Z is: 14
+  //k is: 9
+  //kpoint: 13, 25
+  //Sig is: [13, 22]
+  //W is: 24
+  //u1: 26, u2: 2
+  var priv_key = 7;
+  var pub_key = ec.points[priv_key];
+  var msg_hash = 14;
+  var rand = 9;
+  var rand_pt = ec.points[rand];
+
+  // draw the plots
+  var plotS = plotEmptyFF("#signature-sign");
+  var plotV = plotEmptyFF("#signature-verify");
+  var offset = plotS.getPlotOffset();
+
+  function addPointInfo (plot, x, y, color, info_text) {
+    // set the points
+    plot.addPoint(x, y, color);
+    var loc = plotS.p2c({x: x, y: y});
+
+    var info = document.createElement('div');
+    var $div = $("<div>", {
+      class: "information sig-info",
+      html: info_text,
+      css: {
+        "top": offset.top + loc.top - 10 + "px",
+        "left": offset.left + loc.left + 20 + "px"
+      }
+    });
+    $("#signature-sign").append($div);
+  }
+
+  // add generator point 
+  addPointInfo(plotS, ec.points[1][0], ec.points[1][1], "black", "1 * G");
+  // add public key point
+  addPointInfo(plotS, pub_key[0], pub_key[1], "#59d", priv_key + " * G");
+  // add random point
+  addPointInfo(plotS, rand_pt[0], rand_pt[1], "#7c6", rand + " * G");
+
+}
 
 // resets the plot so we can draw new stuff
 // canvas can't really be "erased", so we must destroy the plot and rebuild it if we want to delete points/lines on the curve
@@ -85,19 +138,15 @@ function showPointAddition (event, pos, item) {
     var int_y = (slope * (plot_config.start_x - int_x) - plot_config.start_y);
 
     // plot the dashed verical line
-    plotDashedVert(plot, int_x, Math.abs(int_y), -Math.abs(int_y));
+    plotDashedVert(plot, int_x, Math.abs(int_y), -Math.abs(int_y), plot_config.colors.secondary);
 
     // add the original point (so it renders on top of the line)
-    plot.addPoint(plot_config.start_x, plot_config.start_y, "#1859a9");
+    plot.addPoint(plot_config.start_x, plot_config.start_y, plot_config.colors.pointA);
 
     // add the "added" point
-    plot.addPoint(x, y, "#a11d20");
+    plot.addPoint(x, y, plot_config.colors.pointB);
 
-    // find intersection point
-    var int_x = (Math.pow(slope,2) - plot_config.start_x - x);
-    var int_y = (slope * (plot_config.start_x - int_x) - plot_config.start_y);
-
-    plot.addPoint(int_x, int_y, "#662c91");
+    plot.addPoint(int_x, int_y, plot_config.colors.sum);
 
     // update the equation
     $(".point-b-add").text("(" + (x >= 0 ? x.toString().substr(0,3) : x.toString().substr(0,4)) + ", " + (y >= 0 ? y.toString().substr(0,3) : y.toString().substr(0,4)) + ")");
@@ -115,20 +164,20 @@ function showPointDouble (event, pos, item) {
     var y = item.datapoint[1];
 
     var tangent = getTangent(x,y);
-    plotLine(plot, tangent.func, "#599ad3");
+    plotLine(plot, tangent.func, plot_config.colors.secondary);
 
     // add the added point
-    plot.addPoint(x, y, "#1859a9");
+    plot.addPoint(x, y, plot_config.colors.pointA);
 
     // draw dashed vertical line
     //x3 = s^2 - x1 - x2 mod p
     //y3 = s(x1 - x3) - y1 mod p
     var line_x = Math.pow(tangent.slope, 2) - 2*x;
     var line_y = (tangent.slope * (x - line_x) - y);
-    plotDashedVert(plot, line_x, Math.abs(line_y), -Math.abs(line_y));
+    plotDashedVert(plot, line_x, Math.abs(line_y), -Math.abs(line_y), plot_config.colors.secondary);
 
     // draw point
-    plot.addPoint(line_x, line_y, "#662c91");
+    plot.addPoint(line_x, line_y, plot_config.colors.sum);
 
     // update equation
     $(".point-a-double").text("(" + (x >= 0 ? x.toString().substr(0,3) : x.toString().substr(0,4)) + ", " + (y >= 0 ? y.toString().substr(0,3) : y.toString().substr(0,4)) + ")");
@@ -178,14 +227,27 @@ function showFFDouble (event, pos, item) {
         }
       }
       lines.push(line);
-      plotLine(plot, line.getY, "orange");
+      plotLine(plot, line.getY, plot_config.colors.primary);
+
 
       // if this line passes through our target, we're done
       if (Math.abs(line.getY(target[0]) - comp_target[1]) < .01) {
         // draw dashed line from comp_target to target
-        return plotDashedVert(plot, target[0], comp_target[1], target[1]);
+        plotDashedVert(plot, target[0], comp_target[1], target[1], plot_config.colors.primary);
+        break;
       }
     };
+
+    // after lines are drawn...color code the important points
+    plot.addPoint(x, y, plot_config.colors.pointA);
+    plot.addPoint(target[0], target[1], plot_config.colors.sum);
+
+    // show the point numbers 
+    $(".point-a-ffdouble").text("(" + x + ", " + y + ")");
+    $(".sum-ffdouble").text("(" + target[0] + ", " + target[1] + ")");
+
+    $(".point-a-ffdouble-multiplier").text(getPointMultiplier(x, y));
+    $(".sum-ffdouble-multiplier").text(getPointMultiplier(target[0], target[1]));
   }
 }
 
@@ -201,13 +263,17 @@ function pointSlope (x, y, slope) {
 }
 
 function ffPointDouble (x, y) {
+  var mult = getPointMultiplier(x,y) * 2;
+  return ec.points[mult % (ec.points.length)]
+}
+
+function getPointMultiplier (x, y) {
   for (var i = 0; i < ec.points.length; i++) {
     if (ec.points[i][0] == x && ec.points[i][1] == y) {
-      var mult = i * 2;
-      return ec.points[mult % (ec.points.length)]
+      return i;
     }
   };
-  return false;
+  return -1;
 }
 
 function invmod (e, et) {
@@ -280,7 +346,7 @@ function plotLineBetweenPts (plot, x1, y1, x2, y2) {
     return x_coord*slope + (y1-(slope*x1));
   }
   // call plotLine(eqn)
-  plotLine(plot, eqn, "#599ad3");
+  plotLine(plot, eqn, plot_config.colors.secondary);
   return slope;
 }
 
@@ -298,7 +364,7 @@ function getLinePts (plot, eq) {
 }
 
 // returns points for x=x_int between y bounds and makes a dashed line
-function plotDashedVert (plot, x_int, y_max, y_min) {
+function plotDashedVert (plot, x_int, y_max, y_min, color) {
   // make sure the order is right...it's easier to check here than from caller
   if (y_min > y_max) {
     var tmp = y_min;
@@ -317,7 +383,7 @@ function plotDashedVert (plot, x_int, y_max, y_min) {
       y2 = y_min; 
     }
     var pos = [[x_int, y1], [x_int, y2]];
-    plot.addPlot(pos, "#599ad3");
+    plot.addPlot(pos, color);
   };
 }
 
@@ -348,7 +414,7 @@ function plotEC (elementId, cb) {
       hoverable: cb ? true : false
     },
     series: {
-      color: "#f2d1b0"
+      color: plot_config.colors.primary
     }
   };
 
@@ -404,7 +470,7 @@ function plotFF (elementId, cb) {
       hoverable: cb ? true : false
     },
     series: {
-      color: "blue",
+      color: plot_config.colors.secondary,
       lines: {
         show: false
       },
@@ -419,6 +485,36 @@ function plotFF (elementId, cb) {
   if (cb) {
     $(elementId).bind("plotclick", cb);
   }
+
+  return plots[elementId];
+}
+
+function plotEmptyFF (elementId) {
+  var options = {
+    xaxis: {
+      min: 0,
+      max: ec.p - 1 
+    },
+    yaxis: {
+      min: 0,
+      max: ec.p - 1
+    },
+    grid: {
+      clickable: false,
+      hoverable: false
+    },
+    series: {
+      color: plot_config.colors.secondary,
+      lines: {
+        show: false
+      },
+      points: {
+        show: true,
+      }
+    }
+  };
+
+  plots[elementId] = $.plot(elementId, [[]], options);
 
   return plots[elementId];
 }
@@ -440,4 +536,7 @@ window.onload = function() {
 
   // ff double
   plotFF("#ff-double", showFFDouble);
+  showFFDouble({delegateTarget: {id: "ff-double"}}, {}, {datapoint: [8, 17]});
+
+  showSignatureExample();
 };

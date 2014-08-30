@@ -39,6 +39,12 @@ If any of these parts are changed, the signature is not authentic for that messa
 
 Notice that it's impossible to create Signature(message1, alice) unless you have the private key for Alice.  Thus, if we have a signature that can be verified with Alice's public key, we know that the message was signed by alice and only Alice.
 
+An ELI5 Example
+
+Imagine a classroom of kids who know multiplication but have not yet learned division.  At the beginning of class, the teacher proclaims "My special number is 5".  The kids know that if they multiply the teacher's special number by his signature, the result will equal the size of the message.  Teacher sends the message "Twas always thus and always thus will be" (40 characters) -- signed "8".  The kids multiply 5 * 8 = 40 and see that the message is indeed 40 characters long......it must be from the teacher!  If someone had added or subtracted words to teh message, the math would no longer work, and since these kids are oblivious to the magic of division, they're unable to forge the teacher's signature.
+
+This is the main gist of elliptic curve digital signatures; the one endowed with the private key is endowed with the power of division, while public key holders can merely check that the signatures are valid.
+
 What are Elliptic Curves?
 
 Not to be confused with an "ellipse," elliptic curves look like:
@@ -76,7 +82,7 @@ Purists will note that this isn't *really* addition; we've just arbitrarily grap
 	P1 + (P2 + P3) = (P1 + P2) + P3
 
 
-What happens if we want to add a point to iteslef?  We can't really draw a line between a point and itself, so we slightly modify the above operation.
+What happens if we want to add a point to itself?  We can't really draw a line between a point and itself, so we slightly modify the above operation.
 
 <div class="ec-big-container plot-container">
   <div id="ec-double" class="plot-placeholder" style="width:450px;height:450px"></div>
@@ -94,47 +100,6 @@ What happens if we want to add a point to iteslef?  We can't really draw a line 
     <p>The graph is interactive, click on the curve to compute a different double.</p>
   </div>
 </div>
-
-The Key to Elliptic Curves
-
-To summarize the above, we have operations that let us do the following:
-  Point A + Point B = Point C
-  2 * Point A = Point D
-
-Let's say we want to figure out 9 * Point A....how might we do that?
-  One way to do this:
-    2 * Point A  = Point 2A
-    Point 2A + Point A  = Point 3A
-    Point 3A + Point A  = Point 4A
-    Point 4A + Point A  = Point 5A
-    Point 5A + Point A  = Point 6A
-    Point 6A + Point A  = Point 7A
-    Point 7A + Point A  = Point 8A
-    Point 8A + Point A  = Point 9A ... our answer.
-
-  An easier way: (called the "divide and conquer method")
-    2 * Point A  = Point 2A
-    2 * Point 2A = Point 4A
-    2 * Point 4A = Point 8A
-    Point 8A + Point A = Point 9A ... our answer.
-
-Using the divide and conquer method, we compute the product in only 4 steps, instead of the expected 9.  This trick is really important in making elliptic curve cryptography secure.  Since elliptic curves don't have a divide method, it's *really hard* to determine what factor was used to arrive at a specific point.
-
-  Example:
-  Let's say I wish to compute: 314159265 * (0,2)
-  Using the divide and conquer method, I perform X operations, and arrive at (X, Y)
-  If I tell you the starting point (0,2) and the ending point (X,Y), you would have to perform all 314159265 operations before you know which factor I used in my calculation.
-
-This trick is the basis of the public key pair.
-
-(show public key equation)
-
-My private key is the private factor.
-My public key is the private factor * some generator point.
-
-Some intersting things arise from this arrangement:
-  - If the private key is very large, it's easy to compute the public key using the divide and conquer method, but very difficult for an attacker to brute force.
-  - Unlike the public key, the private key is just a number, so we can perform "normal" math operations on it to build out or digital signature system (we can easily divide, easily multiply, etc.)
 
 A problem
 
@@ -223,24 +188,136 @@ To demonstrate that we can still perform our elliptic curve functions on a finit
 <div class="ec-big-container plot-container">
   <div id="ff-double" class="plot-placeholder" style="width:450px;height:450px"></div>
   <div class="ec-info">
-    <p>To double a point (2 * <span class="point-a">Point A</span>, which is equivalent to <span class="point-a">Point A</span> + <span class="point-a">Point A</span>)
-    <ol>
-      <li>Draw a line tangent to the elliptic curve through <span class="point-a">Point A</span></li>
-      <li>This line always intersects the elliptic curve at a 2nd point.</li>
-      <li>Reflect the the observed intersection point over the x axis to get <span class="sum">2 * Point A</span></li>
-    </ol>
-    </p>
+    <p>Applying the same technique from above, with a modulus for the intersection line:</p>
     <div class="ec-formula">
-      2 * <span class="point-a point-a-double">(&nbsp;&nbsp;,&nbsp;&nbsp;)</span> = <span class="sum sum-double">(&nbsp;&nbsp;,&nbsp;&nbsp;)</span>
+      2 * <span class="point-a point-a-ffdouble">(&nbsp;&nbsp;,&nbsp;&nbsp;)</span> = <span class="sum sum-ffdouble">(&nbsp;&nbsp;,&nbsp;&nbsp;)</span>
     </div>
+    <p>Looking at our table of points above, we can verify that:</p>
+      <p><span class="point-a point-a-ffdouble">(&nbsp;&nbsp;,&nbsp;&nbsp;)</span> = <span class="point-a point-a-ffdouble-multiplier"></span> * G</p>
+    <p>and the doubled point:</p>
+      <p><span class="sum sum-ffdouble">(&nbsp;&nbsp;,&nbsp;&nbsp;)</span> = <span class="sum sum-ffdouble-multiplier"></span> * G</p>
+    
+    <p>As we can see, doubling the generator doubles the point: 2 * <span class="point-a point-a-ffdouble-multiplier"></span> mod 31 = <span class="sum sum-ffdouble-multiplier"></span></p>
+
     <p>The graph is interactive, click on the curve to compute a different double.</p>
   </div>
 </div>
 
-Unlike 
+The Key to Elliptic Curves
+
+To summarize the above, we have operations that let us do the following:
+  Point A + Point B = Point C
+  2 * Point A = Point D
+
+Let's say we want to figure out 9 * Point A....how might we do that?
+  One way to do this:
+    2 * Point A  = Point 2A
+    Point 2A + Point A  = Point 3A
+    Point 3A + Point A  = Point 4A
+    Point 4A + Point A  = Point 5A
+    Point 5A + Point A  = Point 6A
+    Point 6A + Point A  = Point 7A
+    Point 7A + Point A  = Point 8A
+    Point 8A + Point A  = Point 9A ... our answer.
+
+  An easier way: (called the "divide and conquer method")
+    2 * Point A  = Point 2A
+    2 * Point 2A = Point 4A
+    2 * Point 4A = Point 8A
+    Point 8A + Point A = Point 9A ... our answer.
+
+Using the divide and conquer method, we compute the product in only 4 steps, instead of the expected 9.  This trick is really important in making elliptic curve cryptography secure.  Since elliptic curves don't have a divide method, it's *really hard* to determine what factor was used to arrive at a specific point.
+
+  Example:
+  Let's say I wish to compute: 314159265 * (0,2)
+  Using the divide and conquer method, I perform X operations, and arrive at (X, Y)
+  If I tell you the starting point (0,2) and the ending point (X,Y), you would have to perform all 314159265 operations before you know which factor I used in my calculation.
+
+This trick is the basis of the public key pair.
+
+(show public key equation)
+
+private key = generator multiplier (this is an integer)
+public key = generated point (this is a point, so has x and y coordinates)
+
+Some intersting things arise from this arrangement:
+  - If the private key is very large, it's easy to compute the public key using the divide and conquer method, but very difficult for an attacker to brute force.
+  - Unlike the public key, the private key is just a number.  We're able to perform "normal" math operations on it to build out or digital signature system (we can easily divide, easily multiply, etc.)
+
+The Digital Signature Algorithm
+
+A signature must do 2 things:
+  - prove that the signer did the signing
+  - prove that the thing the signer signed hasn't changed since the signer signed it
+
+The Signature
+  
+The big idea:
+  0.  We have a signer (who possesses a private key), a verifier (who possesses the signer's public key), and a message
+  1.  The signer randomly generates a new point, keeping this point's generator multiplier secret
+  2.  Division lets the signer create a special pathway to this new point by way of the public key and incorporating the message hash.
+  3.  The actual signature contains the "verification" point, and a "special pathway helper" number.
+  4.  A verifier, using the special pathway helper, the signer's public key, and the hash of the message, is able to generates the "verification point" and see that it matches what was sent in the 
+
+Now, let's go through an example:
+
+<div class="ec-big-container plot-container">
+  <h2>The Signer</h2>
+  <div id="signature-sign" class="plot-placeholder" style="width:450px;height:450px"></div>
+  <div class="ec-info">
+    <p>The signer knows:</p>
+    <p style="margin-left: 10px;">Generator: <span class="signature-item">1 * G = (0, 2)</span></p>
+    <p style="margin-left: 10px;">Private Key: <span class="signature-item"><span style="color: #15a">7</span> * G = <span style="color: #59d">(17, 9)</span></span></p>
+    <p style="margin-left: 10px;">Random Point: <span class="signature-item"><span style="color: #084">9</span> * G = <span style="color: #7c6">(13, 25)</span></span></p>
+    <p style="margin-left: 10px;">Message Hash: <span class="signature-item"><span style="color: #a12">14</span></span></p>
+    <p style="margin: 10px 0 0 10px;">Signature Factor: $$\color {#629}{22} = \frac {\color {#A12}{14} + \color {#7C6}{13} * \color {#15A}{7}}{\color {#084}{9}}\text{ mod 31}$$</p>
+  </div>
+  <h2>The Verifier</h2>
+  <div id="signature-verify" class="plot-placeholder" style="width:450px;height:450px"></div>
+  <div class="ec-info">
+    <p>The verifier knows:</p>
+    <p style="margin-left: 10px;">Generator: <span class="signature-item">1 * G = (0, 2)</span></p>
+    <p style="margin-left: 10px;">Public Key: <span class="signature-item" style="color: #59d">(17, 9)</span></p>
+    <p style="margin-left: 10px;">Signature Factor: <span class="signature-item" style="color: #629">22</span></p>
+    <p style="margin-left: 10px;">Message Hash: <span class="signature-item"><span style="color: #a12">14</span></span></p>
+    <p style="margin-left: 10px;">Message Verification Point: $$ \color {#f72}{(2, 21)} = \frac {\color {#A12}{14}}{\color {#629}{22}}\text{ mod 31  } * (0,2)  $$</p>
+    <p style="margin-left: 10px;">Public Key Verification Point: $$ \color {#e22}{(8, 17)} = \frac {\color {#7C6}{13}}{\color {#629}{22}}\text{ mod 31  } * \color {#59D}{(17, 9)}$$</p>
+    <p style="margin-left: 10px;">Verification Point: $$ \color {#f72}{(2, 21)} + \color {#e22}{(8, 17)} = \color {#7c6}{(13, 25)}$$</p>
+
+  </div>
+</div>
+
+
+
+
+Bitcoin Application
+
+And an example with real numbers on the bitcoin curve:
+
+
+
+
+
+Unlike
 
 // TODO include equations after graphs
 // small note on inifinity in group addition
-// describe ecc over finite fields
 // describe the digital signature algorithm
+// every graph has "graph info"
+// remove modulus mathematics explanation (link to wikipedia if people want to learn more)
+
+// highlight KEY IDEAS:
+  // - an elliptic curve is nothing more than: Point = Multiplier * Public Generator Point
+  // - private key is multiplier, public key is point
+  // - given the point, it's impossible to get the multiplier
+  // - can do addition, subtraction, multiplication, and division with the multiplier (private key); can only do addition and multiplication with the point (public key)
+  // - creating a signature requires division (needs the private key), but verifying the signature only needs addition and multiplication (public key)
+
+
+
+
+
+
+
+
 

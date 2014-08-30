@@ -2,7 +2,6 @@
 	margin: auto;
 	box-sizing: border-box;
 	width: 500px;
-	height: 500px;
 	padding: 20px 15px 15px 15px;
 	border: 1px solid #ddd;
 	background: #fff;
@@ -40,11 +39,11 @@
 }
 
 .point-a {
-  color: #1859a9;
+  color: #a11d20;
 }
 
 .point-b {
-  color: #a11d20;
+  color: #1859a9;
 }
 
 .sum {
@@ -59,4 +58,14 @@
   margin-left: 10px;
   padding: 20px;
   box-sizing: border-box;
+}
+
+.sig-info {
+  width: auto !important;
+}
+
+.signature-item {
+  float: right;
+  margin-right: 65px;
+  width: 130px;
 }
