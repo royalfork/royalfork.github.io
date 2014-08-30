@@ -277,12 +277,112 @@ Now, let's go through an example:
   <div class="ec-info">
     <p>The verifier knows:</p>
     <p style="margin-left: 10px;">Generator: <span class="signature-item">1 * G = (0, 2)</span></p>
-    <p style="margin-left: 10px;">Public Key: <span class="signature-item" style="color: #59d">(17, 9)</span></p>
-    <p style="margin-left: 10px;">Signature Factor: <span class="signature-item" style="color: #629">22</span></p>
-    <p style="margin-left: 10px;">Message Hash: <span class="signature-item"><span style="color: #a12">14</span></span></p>
+    <p class="sig-verify-pk" style="margin-left: 10px;">Public Key: 
+      <select id="sig-verify-pk">
+        <option value="7">(17, 9)</option>
+        <option value="1">(0, 2)</option>
+        <option value="2">(6, 17)</option>
+        <option value="3">(22, 1)</option>
+        <option value="4">(23, 3)</option>
+        <option value="5">(2, 8)</option>
+        <option value="6">(7, 6)</option>
+        <option value="8">(21, 3)</option>
+        <option value="9">(13, 25)</option>
+        <option value="10">(3, 15)</option>
+        <option value="11">(19, 22)</option>
+        <option value="12">(14, 26)</option>
+        <option value="13">(28, 8)</option>
+        <option value="14">(8, 17)</option>
+        <option value="15">(15, 17)</option>
+        <option value="16">(15, 12)</option>
+        <option value="17">(8, 12)</option>
+        <option value="18">(28, 21)</option>
+        <option value="19">(14, 3)</option>
+        <option value="20">(19, 7)</option>
+        <option value="21">(3, 14)</option>
+        <option value="22">(13, 4)</option>
+        <option value="23">(21, 26)</option>
+        <option value="24">(17, 20)</option>
+        <option value="25">(7, 23)</option>
+        <option value="26">(2, 21)</option>
+        <option value="27">(23, 26)</option>
+        <option value="28">(22, 28)</option>
+        <option value="29">(6, 12)</option>
+        <option value="30">(0, 27)</option>
+      </select>
+    </p>
+    <p class="sig-verify-sigf" style="margin-left: 10px;">Signature Factor: 
+      <select id="sig-verify-sigf">
+        <option value="22">22</option>
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+        <option value="6">6</option>
+        <option value="7">7</option>
+        <option value="8">8</option>
+        <option value="9">9</option>
+        <option value="10">10</option>
+        <option value="11">11</option>
+        <option value="12">12</option>
+        <option value="13">13</option>
+        <option value="14">14</option>
+        <option value="15">15</option>
+        <option value="16">16</option>
+        <option value="17">17</option>
+        <option value="18">18</option>
+        <option value="19">19</option>
+        <option value="20">20</option>
+        <option value="21">21</option>
+        <option value="23">23</option>
+        <option value="24">24</option>
+        <option value="25">25</option>
+        <option value="26">26</option>
+        <option value="27">27</option>
+        <option value="28">28</option>
+        <option value="29">29</option>
+        <option value="30">30</option>
+      </select>
+    </p>
+    <p class="sig-verify-msgh" style="margin-left: 10px;">Message Hash: 
+      <select id="sig-verify-msgh">
+        <option value="14">14</option>
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+        <option value="6">6</option>
+        <option value="7">7</option>
+        <option value="8">8</option>
+        <option value="9">9</option>
+        <option value="10">10</option>
+        <option value="11">11</option>
+        <option value="12">12</option>
+        <option value="13">13</option>
+        <option value="15">15</option>
+        <option value="16">16</option>
+        <option value="17">17</option>
+        <option value="18">18</option>
+        <option value="19">19</option>
+        <option value="20">20</option>
+        <option value="21">21</option>
+        <option value="22">22</option>
+        <option value="23">23</option>
+        <option value="24">24</option>
+        <option value="25">25</option>
+        <option value="26">26</option>
+        <option value="27">27</option>
+        <option value="28">28</option>
+        <option value="29">29</option>
+        <option value="30">30</option>
+      </select>
+    </p>
     <p style="margin-left: 10px;">Message Verification Point: $$ \color {#f72}{(2, 21)} = \frac {\color {#A12}{14}}{\color {#629}{22}}\text{ mod 31  } * (0,2)  $$</p>
     <p style="margin-left: 10px;">Public Key Verification Point: $$ \color {#e22}{(8, 17)} = \frac {\color {#7C6}{13}}{\color {#629}{22}}\text{ mod 31  } * \color {#59D}{(17, 9)}$$</p>
     <p style="margin-left: 10px;">Verification Point: $$ \color {#f72}{(2, 21)} + \color {#e22}{(8, 17)} = \color {#7c6}{(13, 25)}$$</p>
+
 
   </div>
 </div>

@@ -539,4 +539,8 @@ window.onload = function() {
   showFFDouble({delegateTarget: {id: "ff-double"}}, {}, {datapoint: [8, 17]});
 
   showSignatureExample();
+
+  $('select').selectric({
+    //inheritOriginalWidth: true,
+  });
 };

@@ -69,3 +69,32 @@
   margin-right: 65px;
   width: 130px;
 }
+
+.ec-info .selectricWrapper {
+  display: inline-block;
+  width: 100px;
+  vertical-align: middle;
+}
+
+.sig-verify-pk .selectricWrapper {
+  margin-left: 70px;
+}
+.sig-verify-sigf .selectricWrapper {
+  margin-left: 25px;
+}
+.sig-verify-msgh .selectricWrapper {
+  margin-left: 40px;
+}
+
+.sig-verify-pk .selectric .label, .sig-verify-pk .selectricItems li {
+  color: #59D;
+}
+
+.sig-verify-sigf .selectric .label, .sig-verify-sigf .selectricItems li {
+  color: #629;
+}
+
+.sig-verify-msgh .selectric .label, .sig-verify-msgh .selectricItems li {
+  color: #A12;
+}
+
