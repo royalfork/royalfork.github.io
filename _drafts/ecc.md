@@ -379,9 +379,10 @@ Now, let's go through an example:
         <option value="30">30</option>
       </select>
     </p>
-    <p style="margin-left: 10px;">Message Verification Point: $$ \color {#f72}{(2, 21)} = \frac {\color {#A12}{14}}{\color {#629}{22}}\text{ mod 31  } * (0,2)  $$</p>
-    <p style="margin-left: 10px;">Public Key Verification Point: $$ \color {#e22}{(8, 17)} = \frac {\color {#7C6}{13}}{\color {#629}{22}}\text{ mod 31  } * \color {#59D}{(17, 9)}$$</p>
-    <p style="margin-left: 10px;">Verification Point: $$ \color {#f72}{(2, 21)} + \color {#e22}{(8, 17)} = \color {#7c6}{(13, 25)}$$</p>
+    <p id="sig-v-msg-verification" style="margin-left: 10px;">Message Verification Point: $$ \color {#f72}{(2, 21)} = \frac {\color {#A12}{14}}{\color {#629}{22}}\text{ mod 31  } * (0,2)  $$</p>
+    <p id="sig-v-pk-verification" style="margin-left: 10px;">Public Key Verification Point: $$ \color {#b62}{(8, 17)} = \frac {\color {#7C6}{13}}{\color {#629}{22}}\text{ mod 31  } * \color {#59D}{(17, 9)}$$</p>
+    <p id="sig-v-verification" style="margin-left: 10px;">Verification Point: $$ \color {#f72}{(2, 21)} + \color {#b62}{(8, 17)} = \color {#7c6}{(13, 25)}$$</p>
+    <p class="verification-text">The verification point equals the signer's random point.  This signature is valid.</p> 
 
 
   </div>

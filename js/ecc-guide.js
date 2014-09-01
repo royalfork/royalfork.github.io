@@ -3,6 +3,10 @@ var ec = {
   a: -3,
   b: 4,
   p: 29,
+  sig: {
+    priv: 7,
+    rand: 9
+  },
   points: [
     [-1, -1],
     [0, 2],
@@ -77,13 +81,15 @@ function showSignatureExample () {
 
   // draw the plots
   var plotS = plotEmptyFF("#signature-sign");
+  plotS.id = "signature-sign";
   var plotV = plotEmptyFF("#signature-verify");
-  var offset = plotS.getPlotOffset();
+  plotV.id = "signature-verify";
 
   function addPointInfo (plot, x, y, color, info_text) {
     // set the points
     plot.addPoint(x, y, color);
-    var loc = plotS.p2c({x: x, y: y});
+    var offset = plot.getPlotOffset();
+    var loc = plot.p2c({x: x, y: y});
 
     var info = document.createElement('div');
     var $div = $("<div>", {
@@ -94,8 +100,74 @@ function showSignatureExample () {
         "left": offset.left + loc.left + 20 + "px"
       }
     });
-    $("#signature-sign").append($div);
+
+    $("#"+plot.id).append($div);
   }
+
+  function sigVerificationChange (changedElement) {
+    
+    // collect new values
+    var pk = $("#sig-verify-pk")[0].value;
+    var pk_pt = ec.points[pk];
+    var sig = $("#sig-verify-sigf")[0].value;
+    var msg = $("#sig-verify-msgh")[0].value;
+
+    // compute message verification point
+    // compute public key verification point
+    var inv_sig = invmod(sig, ec.points.length);
+    var msg_verification_gen = (msg * inv_sig) % ec.points.length;
+    var msg_verification_pt = ec.points[msg_verification_gen];
+    var rand_x = ec.points[ec.sig.rand][0];
+    var pk_verification_gen = (rand_x * inv_sig) % ec.points.length;
+    var pk_verification_pt = ec.points[(pk_verification_gen*pk) % ec.points.length];
+    var verification_pt = ec.points[(msg_verification_gen + (pk_verification_gen * pk)) % ec.points.length];
+
+    // update msg verfication equation
+    var msgEqn = MathJax.Hub.getAllJax("sig-v-msg-verification")[0];
+    var msgVerificationEqn = "\\color {#f72}{("+msg_verification_pt[0]+","+msg_verification_pt[1]+")} = \\frac {\\color {#A12}{"+msg+"}}{\\color {#629}{"+sig+"}}\\text{ mod 31  } * (0,2)";
+    MathJax.Hub.Queue(["Text",msgEqn,msgVerificationEqn]);
+
+    // update pk verification equation
+    var pkEqn = MathJax.Hub.getAllJax("sig-v-pk-verification")[0];
+    var pkVerificationEqn = "\\color {#b62}{("+pk_verification_pt[0]+", "+pk_verification_pt[1]+")} = \\frac {\\color {#7C6}{"+rand_x+"}}{\\color {#629}{"+sig+"}}\\text{ mod 31  } * \\color {#59D}{("+pk_pt[0]+", "+pk_pt[1]+")}";
+    MathJax.Hub.Queue(["Text",pkEqn,pkVerificationEqn]);
+    
+    // update verification point
+    var vfEqn = MathJax.Hub.getAllJax("sig-v-verification")[0];
+    MathJax.Hub.Queue(["Text",vfEqn,verificationEqn]);
+    var verificationEqn;
+
+    if (verification_pt[0] == rand_x && verification_pt[1] == ec.points[ec.sig.rand][1]) {
+      $(".verification-text").html("<span style=\"color:green\">The verification point equals the signer's random point.  This signature is valid.</span>")
+      verificationEqn = "\\color {#f72}{("+msg_verification_pt[0]+","+msg_verification_pt[1]+")} + \\color {#b62}{("+pk_verification_pt[0]+", "+pk_verification_pt[1]+")} = \\color {#7c6}{("+verification_pt[0]+", "+verification_pt[1]+")}";
+    } else {
+      $(".verification-text").text("The verification point does not equal the signer's random point.  This signature is NOT valid.")
+      verificationEqn = "\\color {#f72}{("+msg_verification_pt[0]+","+msg_verification_pt[1]+")} + \\color {#b62}{("+pk_verification_pt[0]+", "+pk_verification_pt[1]+")} = \\color {#e22}{\\require {cancel} \\cancel {("+verification_pt[0]+", "+verification_pt[1]+")}}";
+    }
+
+    MathJax.Hub.Queue(["Text",vfEqn,verificationEqn]);
+
+    // update graph
+    // G, pk, msg v, pk v, v
+    
+    plotV = resetEmptyFF("#signature-verify");
+    plotV.id = "signature-verify";
+    // add generator point 
+    addPointInfo(plotV, ec.points[1][0], ec.points[1][1], "black", "1 * G");
+    // add public key point
+    addPointInfo(plotV, pk_pt[0], pk_pt[1], "#59d", "Public Key");
+    // add verification pts
+    addPointInfo(plotV, msg_verification_pt[0], msg_verification_pt[1], "#f72", "Message Verification Point");
+    addPointInfo(plotV, pk_verification_pt[0], pk_verification_pt[1], "#b62", "Public Key Verification Point");
+    addPointInfo(plotV, verification_pt[0], verification_pt[1], "#7c6", "Verification Point");
+    
+  }
+
+
+  // when parameter is changed, update verification information
+  $('select').selectric({
+    onChange: sigVerificationChange
+  });
 
   // add generator point 
   addPointInfo(plotS, ec.points[1][0], ec.points[1][1], "black", "1 * G");
@@ -103,6 +175,15 @@ function showSignatureExample () {
   addPointInfo(plotS, pub_key[0], pub_key[1], "#59d", priv_key + " * G");
   // add random point
   addPointInfo(plotS, rand_pt[0], rand_pt[1], "#7c6", rand + " * G");
+
+  // add generator point 
+  addPointInfo(plotV, ec.points[1][0], ec.points[1][1], "black", "1 * G");
+  // add public key point
+  addPointInfo(plotV, pub_key[0], pub_key[1], "#59d", "Public Key: (17, 9)");
+  // add verification pts
+  addPointInfo(plotV, 2, 21, "#f72", "Message Verification Point: (2, 21)");
+  addPointInfo(plotV, 8, 17, "#b62", "Public Key Verification Point: (8, 17)");
+  addPointInfo(plotV, 13, 25, "#7c6", "Verification Point: (13, 25)");
 
 }
 
@@ -119,6 +200,11 @@ function resetFF (elementId, clickHandler) {
   plots[elementId] = null;
   $(elementId).unbind("plotclick");
   return plotFF(elementId, clickHandler);
+}
+function resetEmptyFF (elementId) {
+  plots[elementId].destroy();
+  plots[elementId] = null;
+  return plotEmptyFF(elementId);
 }
 
 // in our config, we have a "starting point".  when user clicks on the curve, this graphically adds the clicked point with the starting point,
@@ -279,6 +365,9 @@ function getPointMultiplier (x, y) {
 function invmod (e, et) {
   x = extended_gcd(e, et);
   if (x) {
+    if (x < 0) {
+      x += et;
+    }
     return x % et
   }
   return console.log("Can't compute inverse mod: " + x + ", " + y);
@@ -519,7 +608,6 @@ function plotEmptyFF (elementId) {
   return plots[elementId];
 }
 
-
 window.onload = function() {
   // example ec
   plotEC("#empty-ec");
@@ -539,8 +627,4 @@ window.onload = function() {
   showFFDouble({delegateTarget: {id: "ff-double"}}, {}, {datapoint: [8, 17]});
 
   showSignatureExample();
-
-  $('select').selectric({
-    //inheritOriginalWidth: true,
-  });
 };
