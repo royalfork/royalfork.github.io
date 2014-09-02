@@ -7,58 +7,63 @@ css:
   - /css/ecc-guide.css
 ---
 
-In preparation for this post, I've read several research papers, a book, listened to 4 university lectures, spent many hours on IRC, developed elliptic curve libraries in 2 seperate languages, and built my own elliptic curve graphing framework in an attempt to understand how elliptic curves actually work.  This stuff is hard to wrap your head around.  But as one of the fundamental crypto systems which makes Bitcoin a "crypto"-currency, I really wanted to understand the underlying techical aspects which make elliptic curve cryptography secure.  In this post, I'll walk you through the big picture concepts I've accumulated throughout my studies; and illuminate some of the "magic" that makes Bitcoin work.
+In preparation for this post, I've read several research papers, a book, listened to 4 university lectures, idled away hours on IRC, developed elliptic curve libraries in 2 seperate languages, and built my own elliptic curve graphing framework.  Elliptic curve cryuptography is hard.  As one of the fundamental crypto systems making Bitcoin a "crypto"-currency, I really wanted to understand the underlying technical aspects which make this form of cryptography secure.  This post is an attempt to demystify the elliptic curve digital signing algorithm which underlies bitcoin's psuedoanonymous identity system.
 
-# What are Digital Signatures?
+# Explain like I'm young but just a little older than 5
 
-When most people hear "cryptography", they immediately think of secret messages and encryption.  While cryptography *is* used for encryption and decryption, bitcoin heavily relies on a differenty cryptography application known as digital signatures.
+Imagine a classroom of elementary school children who know multiplication but have not yet learned division.  At the beginning of the year, the teacher proclaims "My special number is 5".  One morning, the message "Twas always thus and always thus will be" -- signed "Teacher - 8" appears on the chalkboard.  How do the students know this message came from the teacher and not some movie-quote-loving fraudster?  They multiply the teacher's "special number" - 5 - by the "signature number" - 8 - and if they get the number of characters in the message (40 character message), they deem the signature valid, and are confidant that the message did indeed come from the teacher.  Oblivious to the magic of division, students are unable to produce a valid signature for any arbitrary message, and because the signature is based on the length of the message, the students can't serruptitously change the message. 
 
-Alice needs some mechanism that lets her say "I approve of this message."  In the physical world, when Alice writes her signature on a contract or bank check, others *know* that Alice has "approved the message"; as no one besides Alice can produce that signature.  In the digital world, everything exists as 0's and 1's which can be trivially copied.  How might Alice "sign" something in the digital world such that others can be sufficiently confident that Alice has "approved the message"?
+This is how the elliptic curve digital signature algorithm works; the "knower" of the private key is endowed with the power of division, while public key holders can only use multiplication to check whether signaturees are valid.
 
-The answer is public key cryptography.  Alice has:
+# Why does Bitcoin need digital signatures?
 
-  *  a private key - sequence of numbers that only Alice knows
+Alice sends 2 bitcoins to Bob's public bitcoin address (1Bob4ddr355).  If Bob sends these 2 bitcoins to Charley (1CharAdresS), he broadcasts a message stating "1Bob4ddr355 sends 2 BTC to 1CharAddreS".  The Bitcoin system must ensure that Bob and only Bob can broadcast this message; if anyone else is able to broadcast this message, or alter it in anyway, Bitcoin breaks irreparably.
 
-  *  a public key - another sequence of numbers that Alice can share with anyone
+# Public Key Cryptography to the Rescue
 
-  *  a message that she wants to "approve", or sign
+Bob needs:
 
-Broadly speaking, the "approval verification" or digital signature system will have the following algorithms:
+*  a private key - sequence of numbers that only Bob knows
+*  a public key - another sequence of numbers that Bob can share with anyone
+*  a message to be signed
 
-To sign:
-Message1 + Private Key(alice) = Signature(message1, alice)
+A digital signature system must have the following algorithms:
+
+* To sign:
+  * <span style="color:#a12">"This is a message"</span> + <span style="color:#15a">Private Key<sub>Bob</sub></span> = <span style="color:#629">Signature<sub>&nbsp;"This is a message", Bob</sub></span>
 
 * To verify:
-    - Message1 + Signature(message1, alice) + Public Key(alice) = True
+  * <span style="color:#a12">"This is a message"</span> + <span style="color:#629">Signature<sub>&nbsp;"This is a message", Bob</sub></span> + <span style="color:#59d">Public Key<sub>Bob</sub></span> = <span style="color:green">True</span>
+  * <span style="color:red">"Another message"</span> + <span style="color:#629">Signature<sub>&nbsp;"This is a message", Bob</sub></span> + <span style="color:#59d">Public Key<sub>Bob</sub></span> = <span style="color:red">False</span>
+  * <span style="color:#a12">"This is a message"</span> + <span style="color:red">Signature<sub>&nbsp;"This is a message", Chuck</sub></span> + <span style="color:#59d">Public Key<sub>Bob</sub></span> = <span style="color:red">False</span>
+  * <span style="color:#a12">"This is a message"</span> + <span style="color:red">Signature<sub>&nbsp;"Another message", Bob</sub></span> + <span style="color:#59d">Public Key<sub>Bob</sub></span> = <span style="color:red">False</span>
+  * <span style="color:#a12">"This is a message"</span> + <span style="color:#629">Signature<sub>&nbsp;"This is a message", Bob</sub></span> + <span style="color:red">Public Key<sub>Chuck</sub></span> = <span style="color:red">False</span>
 
-If any of these parts are changed, the signature is not authentic for that message.
+Because it's impossible to create <span style="color:#629">Signature<sub>&nbsp;"This is a message", Bob</sub></span> without Bob's private key, we can be certain that Bob and only Bob digitally signed a message when his public key verifies a signature.
 
-  - Message1 + Signature(message1, chuck) + Public Key(alice) = False
-  - Message1 + Signature(message1, alice) + Public Key(chuck) = False
-  - Message2 + Signature(message1, alice) + Public Key(alice) = False
+Several mathematical techniques can be used to build such a system, but the current "cutting edge" technology in terms of efficiency and security is elliptic curve cryptography.
 
-Notice that it's impossible to create Signature(message1, alice) unless you have the private key for Alice.  Thus, if we have a signature that can be verified with Alice's public key, we know that the message was signed by alice and only Alice.
-
-An ELI5 Example
-
-Imagine a classroom of kids who know multiplication but have not yet learned division.  At the beginning of class, the teacher proclaims "My special number is 5".  The kids know that if they multiply the teacher's special number by his signature, the result will equal the size of the message.  Teacher sends the message "Twas always thus and always thus will be" (40 characters) -- signed "8".  The kids multiply 5 * 8 = 40 and see that the message is indeed 40 characters long......it must be from the teacher!  If someone had added or subtracted words to teh message, the math would no longer work, and since these kids are oblivious to the magic of division, they're unable to forge the teacher's signature.
-
-This is the main gist of elliptic curve digital signatures; the one endowed with the private key is endowed with the power of division, while public key holders can merely check that the signatures are valid.
-
-What are Elliptic Curves?
+# What are Elliptic Curves?
 
 Not to be confused with an "ellipse," elliptic curves look like:
 
-<div class="plot-container">
+
+<div class="ec-big-container plot-container">
   <div id="empty-ec" class="plot-placeholder" style="width:450px;height:450px"></div>
+  <div class="ec-info">
+    <p>The general equation for elliptic curves is:
+    $$y^2 = x^3 + a*x + b$$
+    </p>
+
+    <p style="margin-top: 20px">This specific elliptic curve has equation:
+    $$y^2 = x^3 - 3*x + 4$$
+    </p>
+
+    <p style="margin-top: 20px">All elliptic curves are symmetric about the x-axis.</p>
+  </div>
 </div>
 
-this elliptic curve has equation:
-
-$$y^2 = x^3 + a*x + b$$
-
-Notice that our digital signature algorithm requires addition (Message1 + Signature(message1, alice) + Public Key(alice) = True), so we'll need to be able to do addition on the elliptic curve as well.
-
+We need the ability to add 2 points on this curve; which works as follows.
 
 <div class="ec-big-container plot-container">
   <div id="ec-addition" class="plot-placeholder" style="width:450px;height:450px"></div>
@@ -73,21 +78,16 @@ Notice that our digital signature algorithm requires addition (Message1 + Signat
     <div class="ec-formula">
       <span class="point-a">(-2.0, 1.4)</span> + <span class="point-b point-b-add">(&nbsp;&nbsp;,&nbsp;&nbsp;)</span> = <span class="sum sum-add">(&nbsp;&nbsp;,&nbsp;&nbsp;)</span>
     </div>
-    <p>The graph is interactive, click on the curve to compute different sums.</p>
+    <p><i>This graph is interactive, click on the curve to compute different sums.</i></p>
   </div>
 </div>
 
-Purists will note that this isn't *really* addition; we've just arbitrarily graphed some lines and declared this to be addition.  That is exactly right, but because this operation has gives us the same properties as addition, we can use it as a drop-in replacement.
-  P1 + P2 = P2 + P1
-	P1 + (P2 + P3) = (P1 + P2) + P3
-
-
-What happens if we want to add a point to itself?  We can't really draw a line between a point and itself, so we slightly modify the above operation.
+What happens if we want to add a point to itself?  We can't draw a line between a point and itself, so we slightly modify the above operation.
 
 <div class="ec-big-container plot-container">
   <div id="ec-double" class="plot-placeholder" style="width:450px;height:450px"></div>
   <div class="ec-info">
-    <p>To double a point (2 * <span class="point-a">Point A</span>, which is equivalent to <span class="point-a">Point A</span> + <span class="point-a">Point A</span>)
+    <p>To double a point (<span class="point-a">Point A</span> + <span class="point-a">Point A</span>)
     <ol>
       <li>Draw a line tangent to the elliptic curve through <span class="point-a">Point A</span></li>
       <li>This line always intersects the elliptic curve at a 2nd point.</li>
@@ -97,7 +97,29 @@ What happens if we want to add a point to itself?  We can't really draw a line b
     <div class="ec-formula">
       2 * <span class="point-a point-a-double">(&nbsp;&nbsp;,&nbsp;&nbsp;)</span> = <span class="sum sum-double">(&nbsp;&nbsp;,&nbsp;&nbsp;)</span>
     </div>
-    <p>The graph is interactive, click on the curve to compute a different double.</p>
+    <p><i>The graph is interactive, click on the curve to compute a different double.</i></p>
+  </div>
+</div>
+
+Using a bit of algebra and calculus, we can derive the following equations to easily add or double points without the necessity of graphs. This is included for the curious; knowing that these calculations are extremely easy is more important than knowing the actual equations.
+
+<div class="ec-equations">
+  <p>Given $(x_1, y_1), (x_2, y_2)$: to find $(x_3, y_3) = (x_1, y_1) + (x_2, y_2)$</p>
+  <div style="margin-left: 60px">
+    <div style="display:inline-block">
+      <p>
+        $x_3 = s^2 - x_1 - x_2$
+      </p>
+      <p>$y_3 = s(x_1 - x_3) - y_1$</p>
+    </div>
+
+    <div style="display:inline-block;margin:20px 40px">
+      $$s =
+      \begin{cases}
+      \frac {y_2 - y_1}{x_2 - x_1},  & \text{if $(x_1, y_1) \neq (x_2, y_2)$} \\
+      \frac {3x^2 + a}{2y_1}, & \text{if $(x_1, y_1) = (x_2, y_2)$}
+      \end{cases}$$
+    </div>
   </div>
 </div>
 
@@ -413,12 +435,3 @@ Unlike
   // - given the point, it's impossible to get the multiplier
   // - can do addition, subtraction, multiplication, and division with the multiplier (private key); can only do addition and multiplication with the point (public key)
   // - creating a signature requires division (needs the private key), but verifying the signature only needs addition and multiplication (public key)
-
-
-
-
-
-
-
-
-

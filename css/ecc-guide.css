@@ -60,6 +60,14 @@
   box-sizing: border-box;
 }
 
+.ec-equations {
+  max-width: 800px;
+  margin: auto;
+  padding: 10px;
+  border: 1px solid black;
+  box-sizing: border-box;
+}
+
 .sig-info {
   width: auto !important;
 }

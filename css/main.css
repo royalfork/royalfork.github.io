@@ -49,6 +49,10 @@ a         { color: #2a7ae2; text-decoration: none; }
 a:hover   { color: #000; text-decoration: underline; }
 a:visited { color: #205caa; }
 
+ul {
+  list-style-type: disc;
+}
+
 /* Utility */
 
 .wrap:before,
