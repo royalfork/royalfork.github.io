@@ -145,7 +145,7 @@ This technique of transforming fractions into integers is used to eliminate all 
 
 # Elliptic Curves over Finite Fields
 
-When translating our beloved elliptic curves onto finite fields, graphing all points on the curve becomes a difficult problem.
+When translating our beloved elliptic curves onto finite fields, graphing all points on the curve becomes a difficult problem. In order to enumerate all points, we add an initial point, called the "generator point" to itself many times. 
 
 An elliptic curve with modulus 29 (upper limit is 29) looks like:
 
@@ -168,108 +168,81 @@ An elliptic curve with modulus 29 (upper limit is 29) looks like:
 </div>
 
 Some peculiar things that you might notice:
-  - the graph is symmetric about the line x = 14.5.  Like our continuous graphs, each point has a friend on the same x coordinate.
-  - Not every x coordinate has a point (look at x = 10....there are no points)
 
-This last property is particularly interesting, and raises the question, how exactly was this graph made?  We start with a point that is known to be in the finite field, on the elliptic curve (0,2), and set that as our generator point.  We then enumerate all multiple of this generator point.
-  1 * G = (0, 2)
-  2 * G = (6, 17)
-  3 * G = (22, 1)
-  4 * G = (23, 3)
-  5 * G = (2, 8)
-  6 * G = (7, 6)
-  7 * G = (17, 9)
-  8 * G = (21, 3)
-  9 * G = (13, 25)
-  10 * G = (3, 15)
-  11 * G = (19, 22)
-  12 * G = (14, 26)
-  13 * G = (28, 8)
-  14 * G = (8, 17)
-  15 * G = (15, 17)
-  16 * G = (15, 12)
-  17 * G = (8, 12)
-  18 * G = (28, 21)
-  19 * G = (14, 3)
-  20 * G = (19, 7)
-  21 * G = (3, 14)
-  22 * G = (13, 4)
-  23 * G = (21, 26)
-  24 * G = (17, 20)
-  25 * G = (7, 23)
-  26 * G = (2, 21)
-  27 * G = (23, 26)
-  28 * G = (22, 28)
-  29 * G = (6, 12)
-  30 * G = (0, 27)
-  31 * G = Infinity (remember, if we add 2 points that are on the same x coordinate, we get infinity)
+* Graph is symmetric about the line x = 14.5.  Like our continuous graphs, each point has a complement on the same x coordinate.
+* Not every x coordinate has a point (look at x = 10....there are no points)
 
-This then cycles back around: 32 * G = 1 * G = (0,2), 33 * G = 2 * G = (6, 17), etc.
+We're only able to show all points because the modulus is very small.  When using a much bigger modulus, such as the one bitcoin uses, creating a "full graph" of all points is impossible.
 
-We're only able to do this because we have a very small number of elements.  When using a much bigger modulus, creating a "full graph" of all points is impossible.
-
-To demonstrate that we can still perform our elliptic curve functions on a finite field, we have point doubling:
+Using our trusty equations from above and a convoluted graphing system which wraps around the axes, we can see that our point doubling operator still works properly.  We can also verify the calculations with the generated points above.
 
 <div class="ec-big-container plot-container">
   <div id="ff-double" class="plot-placeholder" style="width:450px;height:450px"></div>
   <div class="ec-info">
-    <p>Applying the same technique from above, with a modulus for the intersection line:</p>
     <div class="ec-formula">
       2 * <span class="point-a point-a-ffdouble">(&nbsp;&nbsp;,&nbsp;&nbsp;)</span> = <span class="sum sum-ffdouble">(&nbsp;&nbsp;,&nbsp;&nbsp;)</span>
     </div>
-    <p>Looking at our table of points above, we can verify that:</p>
-      <p><span class="point-a point-a-ffdouble">(&nbsp;&nbsp;,&nbsp;&nbsp;)</span> = <span class="point-a point-a-ffdouble-multiplier"></span> * G</p>
-    <p>and the doubled point:</p>
-      <p><span class="sum sum-ffdouble">(&nbsp;&nbsp;,&nbsp;&nbsp;)</span> = <span class="sum sum-ffdouble-multiplier"></span> * G</p>
+    <p style="font-family:MathJax_Main;font-size:22px"><span class="point-a point-a-ffdouble">(&nbsp;&nbsp;,&nbsp;&nbsp;)</span> = <span class="point-a point-a-ffdouble-multiplier"></span> * G</p>
+    <p style="font-family:MathJax_Main;font-size:22px"><span class="sum sum-ffdouble">(&nbsp;&nbsp;,&nbsp;&nbsp;)</span> = <span class="sum sum-ffdouble-multiplier"></span> * G</p>
+    <p style="margin-top:10px;font-family:MathJax_Main;font-size:22px"><span class="sum sum-ffdouble-multiplier"></span> = 2 * <span class="point-a point-a-ffdouble-multiplier"></span> mod 31</p>
     
-    <p>As we can see, doubling the generator doubles the point: 2 * <span class="point-a point-a-ffdouble-multiplier"></span> mod 31 = <span class="sum sum-ffdouble-multiplier"></span></p>
-
-    <p>The graph is interactive, click on the curve to compute a different double.</p>
+    <p style="margin-top:20px"><i>The graph is interactive, click on any point to compute it's double.</i></p>
   </div>
 </div>
 
-The Key to Elliptic Curves
+# The Key to Elliptic Curves
 
-To summarize the above, we have operations that let us do the following:
-  Point A + Point B = Point C
-  2 * Point A = Point D
+To summarize, we have operations that let us do the following:
 
-Let's say we want to figure out 9 * Point A....how might we do that?
-  One way to do this:
-    2 * Point A  = Point 2A
-    Point 2A + Point A  = Point 3A
-    Point 3A + Point A  = Point 4A
-    Point 4A + Point A  = Point 5A
-    Point 5A + Point A  = Point 6A
-    Point 6A + Point A  = Point 7A
-    Point 7A + Point A  = Point 8A
-    Point 8A + Point A  = Point 9A ... our answer.
+<div class="ec-equations">
+  $$\text {Point A} + \text {Point B} = \text {Point C}$$
+  $$2 * \text {Point A} = \text {Point D}$$
+</div>
 
-  An easier way: (called the "divide and conquer method")
-    2 * Point A  = Point 2A
-    2 * Point 2A = Point 4A
-    2 * Point 4A = Point 8A
-    Point 8A + Point A = Point 9A ... our answer.
+Let's say we want to figure out "9 * Point A"....how might we do that?
 
-Using the divide and conquer method, we compute the product in only 4 steps, instead of the expected 9.  This trick is really important in making elliptic curve cryptography secure.  Since elliptic curves don't have a divide method, it's *really hard* to determine what factor was used to arrive at a specific point.
+One way to do this:
 
-  Example:
-  Let's say I wish to compute: 314159265 * (0,2)
-  Using the divide and conquer method, I perform X operations, and arrive at (X, Y)
-  If I tell you the starting point (0,2) and the ending point (X,Y), you would have to perform all 314159265 operations before you know which factor I used in my calculation.
+<ul class="no-list">
+  <li>2 * Point A  = Point 2A</li>
+  <li>Point 2A + Point A  = Point 3A</li>
+  <li>Point 3A + Point A  = Point 4A</li>
+  <li>Point 4A + Point A  = Point 5A</li>
+  <li>Point 5A + Point A  = Point 6A</li>
+  <li>Point 6A + Point A  = Point 7A</li>
+  <li>Point 7A + Point A  = Point 8A</li>
+  <li>Point 8A + Point A  = Point 9A ... our answer.</li>
+</ul>
 
-This trick is the basis of the public key pair.
+An easier way: (called the "divide and conquer method")
 
-(show public key equation)
+<ul class="no-list">
+  <li>2 * Point A  = Point 2A</li>
+  <li>2 * Point 2A = Point 4A</li>
+  <li>2 * Point 4A = Point 8A</li>
+  <li>Point 8A + Point A = Point 9A ... our answer.</li>
+</ul>
 
-private key = generator multiplier (this is an integer)
-public key = generated point (this is a point, so has x and y coordinates)
+Using the divide and conquer method, we compute the product in only 4 steps, instead of 9.  As the multiplier gets bigger and bigger, the time saved using the divide and conquer method increases.  This trick is very important in making elliptic curve cryptography actually work and is the basis of the public key pair.
+
+<div class="ec-equations">
+  $$\color {#15a} {\text {Private Key}} * G = \color {#59d} {\text {(Public Key)}}$$
+  <div style="margin:10px">
+    <p><b style="color: #15a">Private key</b> is the generator multiplier (an integer).</p>
+    <p><b>G</b> is the generator point, it is publicly known and is the same for everyone.</p> 
+    <p><b style="color: #59d">Public key</b> is the point generated by the private key.</p> 
+  </div>
+</div>
 
 Some intersting things arise from this arrangement:
-  - If the private key is very large, it's easy to compute the public key using the divide and conquer method, but very difficult for an attacker to brute force.
-  - Unlike the public key, the private key is just a number.  We're able to perform "normal" math operations on it to build out or digital signature system (we can easily divide, easily multiply, etc.)
 
-The Digital Signature Algorithm
+* If the private key is very large, it's easy to compute the public key using the divide and conquer method, but very difficult for an attacker to brute force.
+* Unlike the public key, the private key is just a number.  We're able to perform "normal" math operations on it to build out or digital signature system (we can easily divide, easily multiply, etc.)
+* The public key, an elliptic curve point, is restricted to the addition and doubling operations that we've discussed (there is no division of points)
+
+We now have a system fairly similiar to the elementary school classroom scenario above.
+
+# The Digital Signature Algorithm
 
 A signature must do 2 things:
   - prove that the signer did the signing
