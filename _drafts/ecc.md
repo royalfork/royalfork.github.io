@@ -123,45 +123,48 @@ Using a bit of algebra and calculus, we can derive the following equations to ea
   </div>
 </div>
 
-A problem
+# A problem
 
-As can be seen in the preceeding calculations, decimals are all over the place.  Computers hate decimal places.  Some decimals are irrational (meaning they go on for ever...like 1.4142135623...), and computers don't have the infinite space require to store all these digits.  They can make approximations, but when rounding produces equations that ask if 5.9999999 = 6, what's the computer to do?  Similarly, computers can't compute on truly gargantuam numbers either (numbers with hundreds of digits are ok, but when numbers have thousands or millions of digits, we run into problems).
+Computers hate decimal places, and the preceeding equations produce numbers with decimals.  Some decimals are irrational (they go on for ever...like 1.4142135623...), and computers don't have the infinite space required to store all these digits.  They can make approximations, but when rounding produces equations that ask if 5.9999999 = 6, what's the computer to do?
 
-The relatively esoteric mathematic concepts of "finite fields" and "modular arithmetic" help us solve these problems.  
+The relatively esoteric mathematic concepts of "finite fields" and "modular arithmetic" help us solve this problem.
 
-If you can tell time, you already understand *some* modular arithmetic.  If it's 21:00 (9:00pm), and you must feed your cat in 11 hours, you will be feeding your cat at 8:00; not 32:00.  The clock resets at 24:00 back to 0:00.  We use this same technique (called "taking the modulus") in our elliptic curve equations to prohibit numbers from getting too large; we set an upper limit on how big numbers get and reset them back to 0 when they exceed that limit.
+If you can tell time, you already understand *some* modular arithmetic.  If it's 21:00 (9:00pm), and you must wake up for work in 11 hours, you will set your alarm for 8:00; not 32:00.  The clock resets at 24:00 and we continue counting from 0:00.  This concept, known as "taking the modulus", lets us transform fractions and decimals into whole numbers.
 
-Unfortunately, we still have our decimal problem (21.593 hours + 11 hours is still 8.593 hours).  Observing that the "division" and "square root" operations are the ones which actually cause the decimals; we'll just redefine those operations to give us non-decimal answers!  This sounds a bit like cheating, but because the math works out, it's ok.
 
-The expression "12 mod 9 = 3" means that 12 becomes 3 when our upper limit is 9.
+<div class="ec-equations">
+  <p>If our modulus is 13 (upper limit is 13), and we wish to transform $\color {#a12}{\frac {1}{7}}$:</p>
+  $$\begin{align}
+  7 * \color {#a12}{\frac {1}{7}} &= 1 \\
+  7 * \color {#a12}{2} \text { mod 13} &= 1 \\ 
+  \end{align}$$
+  <p>Because these equations equal each other, we can substitute the fraction $\color {#a12}{\frac {1}{7}}$ with the integer $\color {#a12}{2}$ when operating within a finite field.</p>
+</div>
 
-So:
-
-(4 + 7) mod 9 = 2
-
-(4 - 7) mod 9 = 6 (negative numbers "wrap around" the opposite way)
-
-(4 * 7) mod 9 = 1
-
-(4 / 7) mod 9 = ? --- remember, we don't want decimal places
-
-(4 / 7) mod 9 = (4 * 1/7) mod 9
-
-The trick:
-7 * 1/7 = 1
-(7 * 4) mod 9 = 1
-
-Because division is nothin more than a multiplicative inverse, modular arithmetic lets up replace 1/7 with 4.  Substituting the above equation:
-  (4 * 4) mod 9 = 7
-
-Taking a similiar approach with square roots (sqrt(7) mod 9 = 4, because 4^2 mod 9 = 7), we've now have a way to completely eradicate decimals, big numbers, and negative numbers from our calculations; making our computer very happy.
+This technique of transforming fractions into integers is used to eliminate all decimals from the above mathematical equations, making our computer very happy.
 
 # Elliptic Curves over Finite Fields
 
+When translating our beloved elliptic curves onto finite fields, graphing all points on the curve becomes a difficult problem.
+
 An elliptic curve with modulus 29 (upper limit is 29) looks like:
 
-<div class="plot-container">
+<div class="ec-big-container plot-container">
   <div id="ff-points" class="plot-placeholder" style="width:450px;height:450px"></div>
+  <div class="ec-info">
+    <input type="button" id="generateFFPoints" class="btn btn-default" style="margin-left:25px" value="Generate Points" onclick="generateFFPoints()"/>
+    <input type="button" id="clearFFPoints" disabled="true" class="btn btn-default" style="float:right;margin-right:25px" value="Clear Graph" onclick="resetFFPoints()"/>
+    <p style="border-bottom:1px solid black; margin: 10px 0">Generated Points</p>
+    <div style="display: inline-block; vertical-align: top">
+      <ul id="generatedPts0" class="generatedPointColumn"></ul>
+    </div>
+    <div style="display: inline-block; vertical-align: top">
+      <ul id="generatedPts1" class="generatedPointColumn"></ul>
+    </div>
+    <div style="display: inline-block; vertical-align: top">
+      <ul id="generatedPts2" class="generatedPointColumn"></ul>
+    </div>
+  </div>
 </div>
 
 Some peculiar things that you might notice:
@@ -423,11 +426,8 @@ And an example with real numbers on the bitcoin curve:
 
 Unlike
 
-// TODO include equations after graphs
 // small note on inifinity in group addition
 // describe the digital signature algorithm
-// every graph has "graph info"
-// remove modulus mathematics explanation (link to wikipedia if people want to learn more)
 
 // highlight KEY IDEAS:
   // - an elliptic curve is nothing more than: Point = Multiplier * Public Generator Point

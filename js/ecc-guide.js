@@ -63,6 +63,76 @@ plot_config.start_y = ecYCoord(plot_config.start_x);
 //  plots[elementId] = flot object stored embedded in that elementId
 var plots = {};
 
+function resetFFPoints () {
+  //re enable generate button
+  $("#generateFFPoints").prop("disabled", false);
+  // clear graph
+  var eff =  resetEmptyFF ("#ff-points");
+  eff.id = "ff-points";
+  addPointInfo(eff, 0, 2, "black", "1 * G");
+  
+  // clear generated points list
+  $("#generatedPts0").html("");
+  $("#generatedPts1").html("");
+  $("#generatedPts2").html("");
+}
+
+function generateFFPoints () {
+  //disable generate points button  
+  $("#generateFFPoints").prop("disabled", true);
+  $("#clearFFPoints").prop("disabled", true);
+
+  var plot = plots["#ff-points"];
+  var $li = $("<li>", {
+    html: "1*G = (0, 2)"
+  });
+  $("#generatedPts0").append($li);
+
+  var currentId = 2;
+  var test = setInterval(function (){
+    if (currentId == ec.points.length) {
+      $("#clearFFPoints").prop("disabled", false);
+      clearInterval(test);
+    } else {
+      // remove old info block
+      var prev_pt = ec.points[currentId - 1];
+      $("#"+plot.id+prev_pt[0]+"-"+prev_pt[1]).remove();
+
+      // plot the points
+      var pt = ec.points[currentId];
+      addPointInfo(plot, pt[0], pt[1], plot_config.colors.secondary, currentId + "*G");
+
+      // add the point to our generated list
+      var $li = $("<li>", {
+        html: currentId + "*G = (" + pt[0] + ", " + pt[1] + ")"
+      });
+      $("#generatedPts" + Math.floor((currentId - 1) / 10)).append($li);
+
+      currentId += 1;
+    }
+  }, 500);
+}
+
+function addPointInfo (plot, x, y, color, info_text) {
+  // set the points
+  plot.addPoint(x, y, color);
+  var offset = plot.getPlotOffset();
+  var loc = plot.p2c({x: x, y: y});
+
+  var info = document.createElement('div');
+  var $div = $("<div>", {
+    id: plot.id+x+"-"+y,
+    class: "information sig-info",
+    html: info_text,
+    css: {
+      "top": offset.top + loc.top - 10 + "px",
+      "left": offset.left + loc.left + 10 + "px"
+    }
+  });
+
+  $("#"+plot.id).append($div);
+}
+
 function showSignatureExample () {
   // set the information (this is all generated from the ruby script)
   //pk is: 7
@@ -85,24 +155,6 @@ function showSignatureExample () {
   var plotV = plotEmptyFF("#signature-verify");
   plotV.id = "signature-verify";
 
-  function addPointInfo (plot, x, y, color, info_text) {
-    // set the points
-    plot.addPoint(x, y, color);
-    var offset = plot.getPlotOffset();
-    var loc = plot.p2c({x: x, y: y});
-
-    var info = document.createElement('div');
-    var $div = $("<div>", {
-      class: "information sig-info",
-      html: info_text,
-      css: {
-        "top": offset.top + loc.top - 10 + "px",
-        "left": offset.left + loc.left + 20 + "px"
-      }
-    });
-
-    $("#"+plot.id).append($div);
-  }
 
   function sigVerificationChange (changedElement) {
     
@@ -620,7 +672,9 @@ window.onload = function() {
   showPointDouble({delegateTarget: {id: "ec-double"}}, {}, {datapoint: [-0.8, 2.4]});
 
   // ff with points
-  plotFF("#ff-points");
+  var eff = plotEmptyFF("#ff-points");
+  eff.id = "ff-points";
+  addPointInfo(eff, 0, 2, "black", "1 * G");
 
   // ff double
   plotFF("#ff-double", showFFDouble);

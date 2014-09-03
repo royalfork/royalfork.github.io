@@ -68,6 +68,36 @@
   box-sizing: border-box;
 }
 
+.generatedPointColumn {
+  margin: 0 10px !important;
+  padding: 0 !important;
+  list-style-type: none;
+  font-size: 14px;
+}
+
+.btn-default {
+  color: #333;
+  background-color: #FFF;
+  border-color: #CCC;
+}
+
+.btn {
+    display: inline-block;
+    padding: 6px 12px;
+    margin-bottom: 0px;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.42857;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    cursor: pointer;
+    -moz-user-select: none;
+    background-image: none;
+    border: 1px solid #ADADAD;
+    border-radius: 4px;
+}
+
 .sig-info {
   width: auto !important;
 }
