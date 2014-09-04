@@ -101,7 +101,7 @@ What happens if we want to add a point to itself?  We can't draw a line between 
   </div>
 </div>
 
-Using a bit of algebra and calculus, we can derive the following equations to easily add or double points without the necessity of graphs. This is included for the curious; knowing that these calculations are extremely easy is more important than knowing the actual equations.
+Using a bit of algebra and calculus, we can derive the following equations to easily add or double points without the necessity of graphs. The equations themselves aren't very interesting, they merely serve to show that point addition and doubling are trivial computational problems.
 
 <div class="ec-equations">
   <p>Given $(x_1, y_1), (x_2, y_2)$: to find $(x_3, y_3) = (x_1, y_1) + (x_2, y_2)$</p>
@@ -123,6 +123,42 @@ Using a bit of algebra and calculus, we can derive the following equations to ea
   </div>
 </div>
 
+This gives us the following general equations:
+
+<div class="ec-equations">
+  $$\text {Point A} + \text {Point B} = \text {Point C}$$
+  $$2 * \text {Point A} = \text {Point 2A}$$
+  <p>Because multiplication is just addition many times, we also have multiplication:</p>
+  $$\text {Point A} + \text {Point A} + \cdots + \text {Point A} = N * \text {Point A}$$ 
+  $$N * \text {Point A} = \text {Point NA}$$
+</div>
+
+Let's say we want to figure out "9 * Point A"....how might we do that?
+
+One way to do this:
+
+<ul class="no-list">
+  <li>2 * Point A  = Point 2A</li>
+  <li>Point 2A + Point A  = Point 3A</li>
+  <li>Point 3A + Point A  = Point 4A</li>
+  <li>Point 4A + Point A  = Point 5A</li>
+  <li>Point 5A + Point A  = Point 6A</li>
+  <li>Point 6A + Point A  = Point 7A</li>
+  <li>Point 7A + Point A  = Point 8A</li>
+  <li>Point 8A + Point A  = Point 9A ... our answer.</li>
+</ul>
+
+An easier way: (called the "divide and conquer method")
+
+<ul class="no-list">
+  <li>2 * Point A  = Point 2A</li>
+  <li>2 * Point 2A = Point 4A</li>
+  <li>2 * Point 4A = Point 8A</li>
+  <li>Point 8A + Point A = Point 9A ... our answer.</li>
+</ul>
+
+Using the divide and conquer method, we compute the product in only 4 steps, instead of 9.  As the multiplier gets bigger and bigger, the time saved using the divide and conquer method increases.  This trick is very important in making elliptic curve cryptography actually work. and is the basis of the public key pair (more on that later).
+
 # A problem
 
 Computers hate decimal places, and the preceeding equations produce numbers with decimals.  Some decimals are irrational (they go on for ever...like 1.4142135623...), and computers don't have the infinite space required to store all these digits.  They can make approximations, but when rounding produces equations that ask if 5.9999999 = 6, what's the computer to do?
@@ -138,7 +174,7 @@ If you can tell time, you already understand *some* modular arithmetic.  If it's
   7 * \color {#a12}{\frac {1}{7}} &= 1 \\
   7 * \color {#a12}{2} \text { mod 13} &= 1 \\ 
   \end{align}$$
-  <p>Because these equations equal each other, we can substitute the fraction $\color {#a12}{\frac {1}{7}}$ with the integer $\color {#a12}{2}$ when operating within a finite field.</p>
+  <p>Because these equations both equal 1, we can substitute the fraction $\color {#a12}{\frac {1}{7}}$ with the integer $\color {#a12}{2}$ when operating within a finite field.</p>
 </div>
 
 This technique of transforming fractions into integers is used to eliminate all decimals from the above mathematical equations, making our computer very happy.
@@ -192,38 +228,7 @@ Using our trusty equations from above and a convoluted graphing system which wra
 
 # The Key to Elliptic Curves
 
-To summarize, we have operations that let us do the following:
-
-<div class="ec-equations">
-  $$\text {Point A} + \text {Point B} = \text {Point C}$$
-  $$2 * \text {Point A} = \text {Point D}$$
-</div>
-
-Let's say we want to figure out "9 * Point A"....how might we do that?
-
-One way to do this:
-
-<ul class="no-list">
-  <li>2 * Point A  = Point 2A</li>
-  <li>Point 2A + Point A  = Point 3A</li>
-  <li>Point 3A + Point A  = Point 4A</li>
-  <li>Point 4A + Point A  = Point 5A</li>
-  <li>Point 5A + Point A  = Point 6A</li>
-  <li>Point 6A + Point A  = Point 7A</li>
-  <li>Point 7A + Point A  = Point 8A</li>
-  <li>Point 8A + Point A  = Point 9A ... our answer.</li>
-</ul>
-
-An easier way: (called the "divide and conquer method")
-
-<ul class="no-list">
-  <li>2 * Point A  = Point 2A</li>
-  <li>2 * Point 2A = Point 4A</li>
-  <li>2 * Point 4A = Point 8A</li>
-  <li>Point 8A + Point A = Point 9A ... our answer.</li>
-</ul>
-
-Using the divide and conquer method, we compute the product in only 4 steps, instead of 9.  As the multiplier gets bigger and bigger, the time saved using the divide and conquer method increases.  This trick is very important in making elliptic curve cryptography actually work and is the basis of the public key pair.
+We're now ready to discuss public and private keys:
 
 <div class="ec-equations">
   $$\color {#15a} {\text {Private Key}} * G = \color {#59d} {\text {(Public Key)}}$$
@@ -244,20 +249,29 @@ We now have a system fairly similiar to the elementary school classroom scenario
 
 # The Digital Signature Algorithm
 
-A signature must do 2 things:
-  - prove that the signer did the signing
-  - prove that the thing the signer signed hasn't changed since the signer signed it
+The signer creates 3 points:
 
-The Signature
-  
-The big idea:
-  0.  We have a signer (who possesses a private key), a verifier (who possesses the signer's public key), and a message
-  1.  The signer randomly generates a new point, keeping this point's generator multiplier secret
-  2.  Division lets the signer create a special pathway to this new point by way of the public key and incorporating the message hash.
-  3.  The actual signature contains the "verification" point, and a "special pathway helper" number.
-  4.  A verifier, using the special pathway helper, the signer's public key, and the hash of the message, is able to generates the "verification point" and see that it matches what was sent in the 
+1. <span style="color:#629">Message Point</span>: Convert the message to a number (by taking it's hash), and multiply this number by the generator point  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#629">(Message Point)</span> = <span style="color:#426">Message Hash</span> * G
+2. <span style="color:#084">Random Point</span>: We pick a point at random  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#084">(Random Point)</span> = <span style="color:#042">Random Number</span> * G
+3. <span style="color:#15a">Random-Public Key Point</span>: We multiply the x-coordinate of the random point by the public key, (remember, the random point's x coordinate is an integer)  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#15a">(PK-Random Point)</span> = <span style="color:#084">Random Point X-Coordinate</span> * <span style="color:#147">(Public Key)</span>
 
-Now, let's go through an example:
+The signer then:
+
+* _creates_ a special pathway to the "Random Point" by way of both the "Message Point" and the "PK-Random Point".  We must compute a signature factor such that $$\text {(Signature Factor * Message Point)} + \text {(Signature Factor * Random Public Key Point)} = \text {Random Point}$$
+* _gives_ the random point and the signature factor to the verifier, who checks whether the signature factor does work with the signer's public key and the message point to bring us to the random point.
+
+This is secure because:
+
+* Creating a signature factor that verifies against a given public key is impossible to create without the knowledge of the public key's generator.
+* The signature factor is also used in conjunction with the message hash, so if the message ever changes, the signature factor will no longer be useful in recreating the "pathway" to the given random point.  As stated above, creating a new signature factor to work with a modified message is out of the question.
+
+// TODO make colors for signature create equation, and put in equation box
+// TODO firefox performance
+
+Hopefully the following example can help illuminate this process further.  Notice when the verifier changes parameters, the signature is no longer valid.
 
 <div class="ec-big-container plot-container">
   <h2>The Signer</h2>
@@ -265,10 +279,14 @@ Now, let's go through an example:
   <div class="ec-info">
     <p>The signer knows:</p>
     <p style="margin-left: 10px;">Generator: <span class="signature-item">1 * G = (0, 2)</span></p>
-    <p style="margin-left: 10px;">Private Key: <span class="signature-item"><span style="color: #15a">7</span> * G = <span style="color: #59d">(17, 9)</span></span></p>
-    <p style="margin-left: 10px;">Random Point: <span class="signature-item"><span style="color: #084">9</span> * G = <span style="color: #7c6">(13, 25)</span></span></p>
-    <p style="margin-left: 10px;">Message Hash: <span class="signature-item"><span style="color: #a12">14</span></span></p>
-    <p style="margin: 10px 0 0 10px;">Signature Factor: $$\color {#629}{22} = \frac {\color {#A12}{14} + \color {#7C6}{13} * \color {#15A}{7}}{\color {#084}{9}}\text{ mod 31}$$</p>
+    <p style="margin-left: 10px;">Private Key: <span class="signature-item"><span style="color: #147">7</span> * G = <span style="color: #147">(17, 9)</span></span></p>
+    <p style="margin-left: 10px;">Random Point: <span class="signature-item"><span style="color: #042">9</span> * G = <span style="color: #084">(13, 25)</span></span></p>
+    <p style="margin-left: 10px;">Message Hash: <span class="signature-item"><span style="color: #426">14</span></span></p>
+    <p style="margin: 10px 0 0 10px;">Signature Factor: $$\color {#a12}{22} = \frac {\color {#426}{14} + \color {#084}{13} * \color {#147}{7}}{\color {#042}{9}}\text{ mod 31}$$</p>
+    <div id="signature-box">
+      <h6>The Signature</h6>
+      <span style="color:#a12">22</span>,  <span style="color:#084">13</span>
+    </div>
   </div>
   <h2>The Verifier</h2>
   <div id="signature-verify" class="plot-placeholder" style="width:450px;height:450px"></div>
@@ -377,30 +395,46 @@ Now, let's go through an example:
         <option value="30">30</option>
       </select>
     </p>
-    <p id="sig-v-msg-verification" style="margin-left: 10px;">Message Verification Point: $$ \color {#f72}{(2, 21)} = \frac {\color {#A12}{14}}{\color {#629}{22}}\text{ mod 31  } * (0,2)  $$</p>
-    <p id="sig-v-pk-verification" style="margin-left: 10px;">Public Key Verification Point: $$ \color {#b62}{(8, 17)} = \frac {\color {#7C6}{13}}{\color {#629}{22}}\text{ mod 31  } * \color {#59D}{(17, 9)}$$</p>
-    <p id="sig-v-verification" style="margin-left: 10px;">Verification Point: $$ \color {#f72}{(2, 21)} + \color {#b62}{(8, 17)} = \color {#7c6}{(13, 25)}$$</p>
-    <p class="verification-text">The verification point equals the signer's random point.  This signature is valid.</p> 
+    <p id="sig-v-msg-verification" style="margin-left: 10px;">Message Verification Point: $$ \color {#629}{(2, 21)} = \frac {\color {#426}{14}}{\color {#a12}{22}}\text{ mod 31  } * (0,2)  $$</p>
+    <p id="sig-v-pk-verification" style="margin-left: 10px;">Public Key Verification Point: $$ \color {#15a}{(8, 17)} = \frac {\color {#084}{13}}{\color {#a12}{22}}\text{ mod 31  } * \color {#147}{(17, 9)}$$</p>
+    <p id="sig-v-verification" style="margin-left: 10px;">Verification Point: $$ \color {#629}{(2, 21)} + \color {#15a}{(8, 17)} = \color {#084}{(13, 25)}$$</p>
+    <p class="verification-text" style="color:#084">The verification point equals the signer's random point.  This signature is valid.</p> 
 
 
   </div>
 </div>
 
+# Bitcoin Numbers
 
+To ground all this in reality, here are some real numbers taken directly from bitcoin itself (bitcoin uses the sicp256k1 curve; this curve defines the curve parameters and generator).
 
+<b>Generator Point</b>: Remember, this is the same for everyone.  All other points are children of this base point.  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;x: 55066263022277343669578718895168534326250603453777594175500187360389116729240 (10^76)  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;y: 32670510020758816978083085130507043184471273380659243275938904335757337482424 (10^76)
 
-Bitcoin Application
+<b>Order</b>: The number of possible points on the curve. There's a nifty formula which calculates this (I have no idea why it works, but it does)  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;115792089237316195423570985008687907852837564279074904382605163141518161494337 (10^77)
 
-And an example with real numbers on the bitcoin curve:
+<b>Private Key</b>:   
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;23695310554196047209792918797392416191148132060917476866274911959533140016553
 
+<b>Public Key</b>:  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;x: 39874617776630327813190058413816560767734954098998567043224950074533143699292  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;y: 83115399533222200534442050051826386603242609920409430626876080623730665355556
 
+<b>Signature</b>:  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;r: 25282362915497655056329512917121654088602539327808216077267936411779996643728  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;s: 39257440409490934652644589859771879805788241064351461738307073788061051966857
 
+These are truly gargantuan numbers - the number of possible points on the elliptic curve is fairly close to the number of atoms in the observable universe.  A human body contains 7,000,000,000,000,000,000,000,000,000 atoms.  Think about how insignificant in size we are compared to the entire earth, which is insignificant compared to the sun, which is only 1 of hundreds of billions in a single galaxy, which is still only of a hundred billion galaxies in the observable universe.  Computers are fast, but not fast enough to visit even a small fraction of those points on a curve trying to guess at a public key's generator.  It's just impossible.  It's amazing that such security is possible os quickly and accessibly (a phone can do these calculations in fractions of a second); full acollades go out to the brilliant cryptographers, mathematicians, and computer scientists which made all of this possible.
 
+Special Thanks to the following resources which helped me out:
+  - Cristof Paar
+  - Elliptic Curves Number theory and cryptography - Lawrence Washington
+  - University links
+  - Flot
+  - ECDSA Gem
 
-Unlike
-
-// small note on inifinity in group addition
-// describe the digital signature algorithm
 
 // highlight KEY IDEAS:
   // - an elliptic curve is nothing more than: Point = Multiplier * Public Generator Point
@@ -408,3 +442,5 @@ Unlike
   // - given the point, it's impossible to get the multiplier
   // - can do addition, subtraction, multiplication, and division with the multiplier (private key); can only do addition and multiplication with the point (public key)
   // - creating a signature requires division (needs the private key), but verifying the signature only needs addition and multiplication (public key)
+
+

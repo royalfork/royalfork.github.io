@@ -108,6 +108,27 @@
   width: 130px;
 }
 
+#signature-box {
+  width: 200px;
+  position: relative;
+  border: 1px solid black;
+  text-align: center;
+  font-size: 18px;
+  margin: 60px auto;
+}
+
+#signature-box::after {
+  content: "";
+  height: 130px;
+  width: 8px;
+  display: block;
+  position: absolute;
+  left: 99px;
+  margin-top: -7px;
+  background-image: url("/assets/imgs/arrow-down.svg");
+  background-repeat: no-repeat;
+}
+
 .ec-info .selectricWrapper {
   display: inline-block;
   width: 100px;
@@ -125,14 +146,13 @@
 }
 
 .sig-verify-pk .selectric .label, .sig-verify-pk .selectricItems li {
-  color: #59D;
+  color: #147;
 }
 
 .sig-verify-sigf .selectric .label, .sig-verify-sigf .selectricItems li {
-  color: #629;
+  color: #a12;
 }
 
 .sig-verify-msgh .selectric .label, .sig-verify-msgh .selectricItems li {
-  color: #A12;
+  color: #426;
 }
-

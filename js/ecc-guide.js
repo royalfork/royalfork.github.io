@@ -57,6 +57,24 @@ var plot_config = {
     secondary: "#599ad3"
   }
 };
+
+var colors = {
+  blue: {
+    xdark: "#024",
+    dark: "#147",
+    light: "#15a"
+  },
+  purple: {
+    light: "#629",
+    dark: "#426"
+  },
+  green: {
+    light:"#084",
+    dark:"#042"
+  },
+  brick: "#a12"
+}
+
 plot_config.start_y = ecYCoord(plot_config.start_x);
 
 // store our plots
@@ -156,7 +174,7 @@ function showSignatureExample () {
   plotV.id = "signature-verify";
 
 
-  function sigVerificationChange (changedElement) {
+  function sigVerificationChange () {
     
     // collect new values
     var pk = $("#sig-verify-pk")[0].value;
@@ -176,12 +194,12 @@ function showSignatureExample () {
 
     // update msg verfication equation
     var msgEqn = MathJax.Hub.getAllJax("sig-v-msg-verification")[0];
-    var msgVerificationEqn = "\\color {#f72}{("+msg_verification_pt[0]+","+msg_verification_pt[1]+")} = \\frac {\\color {#A12}{"+msg+"}}{\\color {#629}{"+sig+"}}\\text{ mod 31  } * (0,2)";
+    var msgVerificationEqn = "\\color {"+colors.purple.light+"}{("+msg_verification_pt[0]+","+msg_verification_pt[1]+")} = \\frac {\\color {"+colors.purple.dark+"}{"+msg+"}}{\\color {"+colors.brick+"}{"+sig+"}}\\text{ mod 31  } * (0,2)";
     MathJax.Hub.Queue(["Text",msgEqn,msgVerificationEqn]);
 
     // update pk verification equation
     var pkEqn = MathJax.Hub.getAllJax("sig-v-pk-verification")[0];
-    var pkVerificationEqn = "\\color {#b62}{("+pk_verification_pt[0]+", "+pk_verification_pt[1]+")} = \\frac {\\color {#7C6}{"+rand_x+"}}{\\color {#629}{"+sig+"}}\\text{ mod 31  } * \\color {#59D}{("+pk_pt[0]+", "+pk_pt[1]+")}";
+    var pkVerificationEqn = "\\color {"+colors.blue.light+"}{("+pk_verification_pt[0]+", "+pk_verification_pt[1]+")} = \\frac {\\color {"+colors.green.light+"}{"+rand_x+"}}{\\color {"+colors.brick+"}{"+sig+"}}\\text{ mod 31  } * \\color {"+colors.blue.dark+"}{("+pk_pt[0]+", "+pk_pt[1]+")}";
     MathJax.Hub.Queue(["Text",pkEqn,pkVerificationEqn]);
     
     // update verification point
@@ -189,29 +207,31 @@ function showSignatureExample () {
     MathJax.Hub.Queue(["Text",vfEqn,verificationEqn]);
     var verificationEqn;
 
+    // update graph
+    // G, pk, msg v, pk v, v
+    plotV = resetEmptyFF("#signature-verify");
+    plotV.id = "signature-verify";
+    
+    // add generator point 
+    addPointInfo(plotV, ec.points[1][0], ec.points[1][1], "black", "1 * G");
+    // add public key point
+    addPointInfo(plotV, pk_pt[0], pk_pt[1], colors.blue.dark, "Public Key");
+    // add verification pts
+    addPointInfo(plotV, msg_verification_pt[0], msg_verification_pt[1], colors.purple.light, "Message Verification Point");
+    addPointInfo(plotV, pk_verification_pt[0], pk_verification_pt[1], colors.blue.light, "Public Key Verification Point");
+
     if (verification_pt[0] == rand_x && verification_pt[1] == ec.points[ec.sig.rand][1]) {
-      $(".verification-text").html("<span style=\"color:green\">The verification point equals the signer's random point.  This signature is valid.</span>")
-      verificationEqn = "\\color {#f72}{("+msg_verification_pt[0]+","+msg_verification_pt[1]+")} + \\color {#b62}{("+pk_verification_pt[0]+", "+pk_verification_pt[1]+")} = \\color {#7c6}{("+verification_pt[0]+", "+verification_pt[1]+")}";
+      $(".verification-text").html("<span style=\"color:#084\">The verification point equals the signer's random point.  This signature is valid.</span>")
+      verificationEqn = "\\color {"+colors.purple.light+"}{("+msg_verification_pt[0]+","+msg_verification_pt[1]+")} + \\color {"+colors.blue.light+"}{("+pk_verification_pt[0]+", "+pk_verification_pt[1]+")} = \\color {#084}{("+verification_pt[0]+", "+verification_pt[1]+")}";
+      addPointInfo(plotV, verification_pt[0], verification_pt[1], colors.green.light, "Verification Point");
     } else {
-      $(".verification-text").text("The verification point does not equal the signer's random point.  This signature is NOT valid.")
-      verificationEqn = "\\color {#f72}{("+msg_verification_pt[0]+","+msg_verification_pt[1]+")} + \\color {#b62}{("+pk_verification_pt[0]+", "+pk_verification_pt[1]+")} = \\color {#e22}{\\require {cancel} \\cancel {("+verification_pt[0]+", "+verification_pt[1]+")}}";
+      $(".verification-text").html("<span style=\"color:red\">The verification point does not equal the signer's random point.  This signature is NOT valid.</span>")
+      verificationEqn = "\\color {"+colors.purple.light+"}{("+msg_verification_pt[0]+","+msg_verification_pt[1]+")} + \\color {"+colors.blue.light+"}{("+pk_verification_pt[0]+", "+pk_verification_pt[1]+")} = \\color {#e22}{\\require {cancel} \\cancel {("+verification_pt[0]+", "+verification_pt[1]+")}}";
+      addPointInfo(plotV, verification_pt[0], verification_pt[1], "red", "Verification Point");
     }
 
     MathJax.Hub.Queue(["Text",vfEqn,verificationEqn]);
 
-    // update graph
-    // G, pk, msg v, pk v, v
-    
-    plotV = resetEmptyFF("#signature-verify");
-    plotV.id = "signature-verify";
-    // add generator point 
-    addPointInfo(plotV, ec.points[1][0], ec.points[1][1], "black", "1 * G");
-    // add public key point
-    addPointInfo(plotV, pk_pt[0], pk_pt[1], "#59d", "Public Key");
-    // add verification pts
-    addPointInfo(plotV, msg_verification_pt[0], msg_verification_pt[1], "#f72", "Message Verification Point");
-    addPointInfo(plotV, pk_verification_pt[0], pk_verification_pt[1], "#b62", "Public Key Verification Point");
-    addPointInfo(plotV, verification_pt[0], verification_pt[1], "#7c6", "Verification Point");
     
   }
 
@@ -231,11 +251,11 @@ function showSignatureExample () {
   // add generator point 
   addPointInfo(plotV, ec.points[1][0], ec.points[1][1], "black", "1 * G");
   // add public key point
-  addPointInfo(plotV, pub_key[0], pub_key[1], "#59d", "Public Key: (17, 9)");
+  addPointInfo(plotV, pub_key[0], pub_key[1], colors.blue.dark, "Public Key: (17, 9)");
   // add verification pts
-  addPointInfo(plotV, 2, 21, "#f72", "Message Verification Point: (2, 21)");
-  addPointInfo(plotV, 8, 17, "#b62", "Public Key Verification Point: (8, 17)");
-  addPointInfo(plotV, 13, 25, "#7c6", "Verification Point: (13, 25)");
+  addPointInfo(plotV, 2, 21, colors.purple.light, "Message Verification Point: (2, 21)");
+  addPointInfo(plotV, 8, 17, colors.blue.light, "Public Key Verification Point: (8, 17)");
+  addPointInfo(plotV, 13, 25, colors.green.light, "Verification Point: (13, 25)");
 
 }
 
