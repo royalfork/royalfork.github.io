@@ -7,17 +7,17 @@ css:
   - /css/ecc-guide.css
 ---
 
-In preparation for this post, I've read several research papers, a book, listened to 4 university lectures, idled away hours on IRC, developed elliptic curve libraries in 2 seperate languages, and built my own elliptic curve graphing framework.  Elliptic curve cryuptography is hard.  As one of the fundamental crypto systems making Bitcoin a "crypto"-currency, I really wanted to understand the underlying technical aspects which make this form of cryptography secure.  This post is an attempt to demystify the elliptic curve digital signing algorithm which underlies bitcoin's psuedoanonymous identity system.
+In preparation for this post, I've read several research papers, a book, listened to 4 university lectures, idled away hours on IRC, developed elliptic curve libraries in 2 seperate languages, and built my own elliptic curve graphing framework.  Elliptic curve cryuptography is hard to wrap your head around.  As one of the fundamental crypto systems making Bitcoin a "crypto"-currency, I really wanted to understand the underlying technical aspects which make this form of cryptography secure.  This post is an attempt to demystify the elliptic curve digital signing algorithm which underlies bitcoin's psuedo-anonymous identity system.
 
-# Explain like I'm young but just a little older than 5
+# Explain like I'm 5 (or thereabouts)
 
-Imagine a classroom of elementary school children who know multiplication but have not yet learned division.  At the beginning of the year, the teacher proclaims "My special number is 5".  One morning, the message "Twas always thus and always thus will be" -- signed "Teacher - 8" appears on the chalkboard.  How do the students know this message came from the teacher and not some movie-quote-loving fraudster?  They multiply the teacher's "special number" - 5 - by the "signature number" - 8 - and if they get the number of characters in the message (40 character message), they deem the signature valid, and are confidant that the message did indeed come from the teacher.  Oblivious to the magic of division, students are unable to produce a valid signature for any arbitrary message, and because the signature is based on the length of the message, the students can't serruptitously change the message. 
+Imagine a classroom of elementary school children who know multiplication but have not yet learned division.  At the beginning of the year, the teacher proclaims "My special number is 5".  One morning, the message "Twas always thus and always thus will be" -- signed "Teacher - 8" appears on the chalkboard.  How do the students know this message came from the teacher and not some movie-quote-loving fraudster?  They multiply the teacher's "special number" - 5 - by the "signature number" - 8 - and if they get the number of characters in the message (40 characters), they deem the signature valid, and are confidant that the message actually came from the teacher.  Oblivious to the magic of division, students are unable to produce a valid signature for any arbitrary message, and because the signature is based on the length of the message, the students can't serruptitously change the message. 
 
-This is how the elliptic curve digital signature algorithm works; the "knower" of the private key is endowed with the power of division, while public key holders can only use multiplication to check whether signaturees are valid.
+This is fundamentally how the elliptic curve digital signature algorithm works; the knower of the private key is endowed with the power of division, while public key holders are restricted to multiplication, which lets them check whether a signature is valid.
 
 # Why does Bitcoin need digital signatures?
 
-Alice sends 2 bitcoins to Bob's public bitcoin address (1Bob4ddr355).  If Bob sends these 2 bitcoins to Charley (1CharAdresS), he broadcasts a message stating "1Bob4ddr355 sends 2 BTC to 1CharAddreS".  The Bitcoin system must ensure that Bob and only Bob can broadcast this message; if anyone else is able to broadcast this message, or alter it in anyway, Bitcoin breaks irreparably.
+Alice sends 2 bitcoins to Bob's public bitcoin address (1Bob4ddr355).  If Bob sends these 2 bitcoins to Charley (1Char4ddr355), he broadcasts a message stating "1Bob4ddr355 sends 2 BTC to 1Char4ddr355".  The Bitcoin system must ensure that Bob and only Bob can broadcast this message; if anyone can broadcast a transaction spending Bob's bitcoin, or alter Bob's message in anyway, then Bitcoin breaks irreparably.
 
 # Public Key Cryptography to the Rescue
 
@@ -27,17 +27,73 @@ Bob needs:
 *  a public key - another sequence of numbers that Bob can share with anyone
 *  a message to be signed
 
-A digital signature system must have the following algorithms:
+<div class="ec-equations">
+  A digital signature system will enable the following:
 
-* To sign:
-  * <span style="color:#a12">"This is a message"</span> + <span style="color:#15a">Private Key<sub>Bob</sub></span> = <span style="color:#629">Signature<sub>&nbsp;"This is a message", Bob</sub></span>
+  <p style="margin-top:15px">To sign:</p>
+  <table class="signature-description">
+    <tbody>
+      <tr>
+        <td><span style="color:#a12">"This is a message"</span></td>
+        <td>+</td>
+        <td><span style="color:#15a">Private Key<sub>Bob</sub></span></td>
+        <td>=</td>
+        <td><span style="color:#629">Signature<sub>&nbsp;"This is a message", Bob</sub></span></td>
+      </tr>
+    </tbody>
+  </table>
 
-* To verify:
-  * <span style="color:#a12">"This is a message"</span> + <span style="color:#629">Signature<sub>&nbsp;"This is a message", Bob</sub></span> + <span style="color:#59d">Public Key<sub>Bob</sub></span> = <span style="color:green">True</span>
-  * <span style="color:red">"Another message"</span> + <span style="color:#629">Signature<sub>&nbsp;"This is a message", Bob</sub></span> + <span style="color:#59d">Public Key<sub>Bob</sub></span> = <span style="color:red">False</span>
-  * <span style="color:#a12">"This is a message"</span> + <span style="color:red">Signature<sub>&nbsp;"This is a message", Chuck</sub></span> + <span style="color:#59d">Public Key<sub>Bob</sub></span> = <span style="color:red">False</span>
-  * <span style="color:#a12">"This is a message"</span> + <span style="color:red">Signature<sub>&nbsp;"Another message", Bob</sub></span> + <span style="color:#59d">Public Key<sub>Bob</sub></span> = <span style="color:red">False</span>
-  * <span style="color:#a12">"This is a message"</span> + <span style="color:#629">Signature<sub>&nbsp;"This is a message", Bob</sub></span> + <span style="color:red">Public Key<sub>Chuck</sub></span> = <span style="color:red">False</span>
+  <p>To verify:</p>
+  <table class="signature-description">
+    <tbody>
+      <tr>
+        <td><span style="color:#a12">"This is a message"</span></td>
+        <td>+</td>
+        <td><span style="color:#629">Signature<sub>&nbsp;"This is a message", Bob</sub></span></td>
+        <td>+</td>
+        <td><span style="color:#59d">Public Key<sub>Bob</sub></span></td>
+        <td>=</td>
+        <td><span style="color:green">True</span></td>
+      </tr>
+      <tr>
+        <td><span style="color:red">"Another message"</span></td>
+        <td>+</td>
+        <td><span style="color:#629">Signature<sub>&nbsp;"This is a message", Bob</sub></span></td>
+        <td>+</td>
+        <td><span style="color:#59d">Public Key<sub>Bob</sub></span></td>
+        <td>=</td>
+        <td><span style="color:red">False</span></td>
+      </tr>
+      <tr>
+        <td><span style="color:#a12">"This is a message"</span></td>
+        <td>+</td>
+        <td><span style="color:red">Signature<sub>&nbsp;"This is a message", Chuck</sub></span></td>
+        <td>+</td>
+        <td><span style="color:#59d">Public Key<sub>Bob</sub></span></td>
+        <td>=</td>
+        <td><span style="color:red">False</span></td>
+      </tr>
+      <tr>
+        <td><span style="color:#a12">"This is a message"</span></td>
+        <td>+</td>
+        <td><span style="color:red">Signature<sub>&nbsp;"Another message", Bob</sub></span></td>
+        <td>+</td>
+        <td><span style="color:#59d">Public Key<sub>Bob</sub></span></td>
+        <td>=</td>
+        <td><span style="color:red">False</span></td>
+      </tr>
+      <tr>
+        <td><span style="color:#a12">"This is a message"</span></td>
+        <td>+</td>
+        <td><span style="color:#629">Signature<sub>&nbsp;"This is a message", Bob</sub></span></td>
+        <td>+</td>
+        <td><span style="color:red">Public Key<sub>Chuck</sub></span></td>
+        <td>=</td>
+        <td><span style="color:red">False</span></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
 
 Because it's impossible to create <span style="color:#629">Signature<sub>&nbsp;"This is a message", Bob</sub></span> without Bob's private key, we can be certain that Bob and only Bob digitally signed a message when his public key verifies a signature.
 
@@ -101,7 +157,7 @@ What happens if we want to add a point to itself?  We can't draw a line between 
   </div>
 </div>
 
-Using a bit of algebra and calculus, we can derive the following equations to easily add or double points without the necessity of graphs. The equations themselves aren't very interesting, they merely serve to show that point addition and doubling are trivial computational problems.
+Using a bit of algebra and calculus, we can derive the following equations to easily add or double points without the necessity of graphs. The equations themselves aren't very interesting; they're here to show that point addition and doubling are trivially calculated by computers.
 
 <div class="ec-equations">
   <p>Given $(x_1, y_1), (x_2, y_2)$: to find $(x_3, y_3) = (x_1, y_1) + (x_2, y_2)$</p>
@@ -123,7 +179,7 @@ Using a bit of algebra and calculus, we can derive the following equations to ea
   </div>
 </div>
 
-This gives us the following general equations:
+Point addition and point doubling gives us:
 
 <div class="ec-equations">
   $$\text {Point A} + \text {Point B} = \text {Point C}$$
@@ -157,15 +213,15 @@ An easier way: (called the "divide and conquer method")
   <li>Point 8A + Point A = Point 9A ... our answer.</li>
 </ul>
 
-Using the divide and conquer method, we compute the product in only 4 steps, instead of 9.  As the multiplier gets bigger and bigger, the time saved using the divide and conquer method increases.  This trick is very important in making elliptic curve cryptography actually work. and is the basis of the public key pair (more on that later).
+Using the divide and conquer method, we compute the product in only 4 steps, instead of 9.  As the multiplier increases in size, the time saved using the divide and conquer method increases exponentially: calculating 1,000 * G takes only 10 steps and 10,000 * G takes 14 steps (bitcoin uses numbers on the order of 10<sup>77</sup>, which take about 250 steps to compute).  This trick is very important in making elliptic curve cryptography actually work, and is the basis of the public key pair (more on that later).
 
 # A problem
 
-Computers hate decimal places, and the preceeding equations produce numbers with decimals.  Some decimals are irrational (they go on for ever...like 1.4142135623...), and computers don't have the infinite space required to store all these digits.  They can make approximations, but when rounding produces equations that ask if 5.9999999 = 6, what's the computer to do?
+Computers hate decimal places, and the preceeding equations produce numbers with decimals.  Some decimals are irrational (they go on forever...like 1.4142135623...), and computers don't have the infinite space required to store all these digits.  They can make approximations, but when rounding produces equations that ask if 5.9999999 = 6, what's the computer to do?
 
-The relatively esoteric mathematic concepts of "finite fields" and "modular arithmetic" help us solve this problem.
+Two relatively esoteric mathematical concepts called "finite fields" and "modular arithmetic" help us solve this problem.
 
-If you can tell time, you already understand *some* modular arithmetic.  If it's 21:00 (9:00pm), and you must wake up for work in 11 hours, you will set your alarm for 8:00; not 32:00.  The clock resets at 24:00 and we continue counting from 0:00.  This concept, known as "taking the modulus", lets us transform fractions and decimals into whole numbers.
+If you can tell time, you already understand *some* modular arithmetic.  If it's 21:00 (9:00pm), and you must wake up for work in 11 hours, you will set your alarm for 8:00; not 32:00.  When the clock resets at 24:00, we continue counting from 0:00.  This concept, known as "taking the modulus", lets us transform fractions and decimals into whole numbers.
 
 
 <div class="ec-equations">
@@ -210,7 +266,7 @@ Some peculiar things that you might notice:
 
 We're only able to show all points because the modulus is very small.  When using a much bigger modulus, such as the one bitcoin uses, creating a "full graph" of all points is impossible.
 
-Using our trusty equations from above and a convoluted graphing system which wraps around the axes, we can see that our point doubling operator still works properly.  We can also verify the calculations with the generated points above.
+Using our trusty equations from above and a convoluted graphing system which wraps around the axes, we can see that our point doubling operator still works properly.
 
 <div class="ec-big-container plot-container">
   <div id="ff-double" class="plot-placeholder" style="width:450px;height:450px"></div>
@@ -242,7 +298,7 @@ We're now ready to discuss public and private keys:
 Some intersting things arise from this arrangement:
 
 * If the private key is very large, it's easy to compute the public key using the divide and conquer method, but very difficult for an attacker to brute force.
-* Unlike the public key, the private key is just a number.  We're able to perform "normal" math operations on it to build out or digital signature system (we can easily divide, easily multiply, etc.)
+* Unlike the public key, the private key is just a number.  We're able to perform "normal" math operations on it to build out the digital signature system (we can easily divide, multiply, etc.)
 * The public key, an elliptic curve point, is restricted to the addition and doubling operations that we've discussed (there is no division of points)
 
 We now have a system fairly similiar to the elementary school classroom scenario above.
@@ -258,20 +314,20 @@ The signer creates 3 points:
 3. <span style="color:#15a">Random-Public Key Point</span>: We multiply the x-coordinate of the random point by the public key, (remember, the random point's x coordinate is an integer)  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#15a">(PK-Random Point)</span> = <span style="color:#084">Random Point X-Coordinate</span> * <span style="color:#147">(Public Key)</span>
 
-The signer then:
+The signer *creates* a special pathway to the "Random Point" by way of both the "Message Point" and the "PK-Random Point".  We must compute a signature factor such that 
 
-* _creates_ a special pathway to the "Random Point" by way of both the "Message Point" and the "PK-Random Point".  We must compute a signature factor such that $$\text {(Signature Factor * Message Point)} + \text {(Signature Factor * Random Public Key Point)} = \text {Random Point}$$
-* _gives_ the random point and the signature factor to the verifier, who checks whether the signature factor does work with the signer's public key and the message point to bring us to the random point.
+<div class="ec-equations" style="font-size: .8em">
+  $$(\color {#a12}{\text {Signature Factor}} * \color {#629}{\text {Message Point}}) + (\color {#a12}{\text {Signature Factor}} * \color {#15a}{\text {Random Public Key Point}}) = \color {#084}{\text {Random Point}}$$
+</div>
+
+The signer then  *gives* the random point and the signature factor to the verifier, who checks whether the signature factor recreates the special pathway to the random point by way of the "Message Point" and "PK-Random Point."
 
 This is secure because:
 
-* Creating a signature factor that verifies against a given public key is impossible to create without the knowledge of the public key's generator.
+* Creating a signature factor that verifies with a given public key is impossible to create without the knowledge of the public key's generator.
 * The signature factor is also used in conjunction with the message hash, so if the message ever changes, the signature factor will no longer be useful in recreating the "pathway" to the given random point.  As stated above, creating a new signature factor to work with a modified message is out of the question.
 
-// TODO make colors for signature create equation, and put in equation box
-// TODO firefox performance
-
-Hopefully the following example can help illuminate this process further.  Notice when the verifier changes parameters, the signature is no longer valid.
+Hopefully the following example can help illuminate this process further (although, admittedly, it's a bit hard to conceptualize).  Notice when the verifier changes any of the parameters, the signature is no longer valid.
 
 <div class="ec-big-container plot-container">
   <h2>The Signer</h2>
@@ -406,7 +462,7 @@ Hopefully the following example can help illuminate this process further.  Notic
 
 # Bitcoin Numbers
 
-To ground all this in reality, here are some real numbers taken directly from bitcoin itself (bitcoin uses the sicp256k1 curve; this curve defines the curve parameters and generator).
+To ground all this in reality, here are some real numbers taken directly from bitcoin itself (bitcoin uses the sicp256k1 curve, which has it's own paramers and generator point).
 
 <b>Generator Point</b>: Remember, this is the same for everyone.  All other points are children of this base point.  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;x: 55066263022277343669578718895168534326250603453777594175500187360389116729240 (10^76)  
@@ -426,21 +482,20 @@ To ground all this in reality, here are some real numbers taken directly from bi
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;r: 25282362915497655056329512917121654088602539327808216077267936411779996643728  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;s: 39257440409490934652644589859771879805788241064351461738307073788061051966857
 
-These are truly gargantuan numbers - the number of possible points on the elliptic curve is fairly close to the number of atoms in the observable universe.  A human body contains 7,000,000,000,000,000,000,000,000,000 atoms.  Think about how insignificant in size we are compared to the entire earth, which is insignificant compared to the sun, which is only 1 of hundreds of billions in a single galaxy, which is still only of a hundred billion galaxies in the observable universe.  Computers are fast, but not fast enough to visit even a small fraction of those points on a curve trying to guess at a public key's generator.  It's just impossible.  It's amazing that such security is possible os quickly and accessibly (a phone can do these calculations in fractions of a second); full acollades go out to the brilliant cryptographers, mathematicians, and computer scientists which made all of this possible.
+These are truly gargantuan numbers - the number of possible points on the elliptic curve is fairly close to the number of atoms in the observable universe.  A human body contains 7,000,000,000,000,000,000,000,000,000 atoms.  Think about how insignificant in size we are compared to the entire earth, which is insignificant compared to the sun, which is only 1 of hundreds of billions in a single galaxy, of which there are hundreds of billions in the universe.  Computers are fast, but not fast enough to visit even a small fraction of those points.  It's just impossible.  It's amazing that such security is possible so quickly and accessibly (a phone can do these calculations in fractions of a second); full acollades go out to the brilliant cryptographers, mathematicians, and computer scientists behind the elliptic curve technology.
 
-Special Thanks to the following resources which helped me out:
-  - Cristof Paar
-  - Elliptic Curves Number theory and cryptography - Lawrence Washington
-  - University links
-  - Flot
-  - ECDSA Gem
+# Key Take-aways
 
+* An elliptic curve is nothing more than: Point = Multiplier * Public Generator Point
+* Private key is the multiplier, public key is the point
+* Given the point, it's impossible to get the multiplier
+* You can do addition, subtraction, multiplication, and division with the multiplier (private key); but can only do addition and multiplication with the point (public key)
+* Creating a signature requires division (needs the private key), but verifying the signature only needs addition and multiplication (can be done with public key)
 
-// highlight KEY IDEAS:
-  // - an elliptic curve is nothing more than: Point = Multiplier * Public Generator Point
-  // - private key is multiplier, public key is point
-  // - given the point, it's impossible to get the multiplier
-  // - can do addition, subtraction, multiplication, and division with the multiplier (private key); can only do addition and multiplication with the point (public key)
-  // - creating a signature requires division (needs the private key), but verifying the signature only needs addition and multiplication (public key)
+Special Thanks to the following resources which helped me out immensely:
 
-
+- [Understanding Cryptography - by Cristof Paar](http://www.amazon.com/Understanding-Cryptography-Textbook-Students-Practitioners/dp/3642041000)
+- [Elliptic Curves Number Theory and Cryptography - by Lawrence Washington](http://www.amazon.com/Elliptic-Curves-Cryptography-Mathematics-Applications/dp/1420071467/)
+- [Intro to Cryptography and Data Security - Ruhr University Lectures](https://www.youtube.com/watch?v=HuKT-_PzTIc&list=PLoJC20gNfC2gAB-eg7oaUTheB_JgQY4-q)
+- [Flot Javascript Plotting Library](https://github.com/flot/flot)
+- [Ruby ECDSA &#124; github.com](https://github.com/DavidEGrayson/ruby_ecdsa)

@@ -108,6 +108,14 @@
   width: 130px;
 }
 
+table.signature-description {
+  margin: auto;
+}
+
+table.signature-description td {
+  padding: 0 5px;
+}
+
 #signature-box {
   width: 200px;
   position: relative;

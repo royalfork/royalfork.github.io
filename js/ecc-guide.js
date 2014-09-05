@@ -244,9 +244,9 @@ function showSignatureExample () {
   // add generator point 
   addPointInfo(plotS, ec.points[1][0], ec.points[1][1], "black", "1 * G");
   // add public key point
-  addPointInfo(plotS, pub_key[0], pub_key[1], "#59d", priv_key + " * G");
+  addPointInfo(plotS, pub_key[0], pub_key[1], colors.blue.dark, priv_key + " * G");
   // add random point
-  addPointInfo(plotS, rand_pt[0], rand_pt[1], "#7c6", rand + " * G");
+  addPointInfo(plotS, rand_pt[0], rand_pt[1], colors.green.light, rand + " * G");
 
   // add generator point 
   addPointInfo(plotV, ec.points[1][0], ec.points[1][1], "black", "1 * G");
@@ -592,23 +592,25 @@ function plotEC (elementId, cb) {
 function getECPts () {
   if (!ec.hasOwnProperty("contpts")) {
     var pos = [];
-    for (var i = plot_config.x_max; i > plot_config.x_min; i -= 0.0002) {
+    for (var i = plot_config.x_max; i > plot_config.x_min; i -= 0.01) {
       var yc = ecYCoord(i);
       if (!yc) {
+        // add the 0 point so the curve looks continuous
+        pos.push([pos[pos.length-1][0], 0]);
         break;
       }
       pos.push([i, ecYCoord(i)]);
     }
-    ec.contpts = pos;
+    //ec.contpts = pos;
+    var neg = pos.map(function(val) {
+      return [val[0], -val[1]];
+    }).reverse();
+
+    ec.contpts = [];
+    ec.contpts.push(pos, neg);
   }
 
-  var neg = ec.contpts.map(function(val) {
-    return [val[0], -val[1]];
-  }).reverse();
-
-  var ret = [];
-  ret.push(ec.contpts, neg);
-  return ret;
+  return ec.contpts;
 }
 
 // for continuous EC, given x, get y
