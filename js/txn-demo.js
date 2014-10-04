@@ -109,9 +109,97 @@ function processTxn (data) {
   }
 
   txn.locktime = hex.pop(8); // 4 bytes
+
+  return txn;
 }
 
+function showTxn (txn) {
+  var $txn_container = $("<span />", { 
+    "class":"txndemo-hex-container", 
+  });
 
+  $txn_container.append(
+    $("<span />", { 
+      "class":"txndemo-hex-version", 
+      text: txn.version })
+  );
+  $txn_container.append(
+    $("<span />", { 
+      "class":"txndemo-hex-num_in", 
+      text: txn.num_in })
+  );
+  for (var i = 0, l = txn.inputs.length; i < l; i ++) {
+    var $input_container = $("<span />", { 
+      "class":"txndemo-hex-input-container", 
+    });
+    var input = txn.inputs[i];
+    $input_container.append(
+      $("<span />", { 
+        "class":"txndemo-hex-input-hash", 
+        text: input.hash })
+    );
+    $input_container.append(
+      $("<span />", { 
+        "class":"txndemo-hex-input-index", 
+        text: input.index })
+    );
+    $input_container.append(
+      $("<span />", { 
+        "class":"txndemo-hex-input-script_size", 
+        text: input.script_size })
+    );
+    $input_container.append(
+      $("<span />", { 
+        "class":"txndemo-hex-input-script", 
+        text: input.script })
+    );
+    $input_container.append(
+      $("<span />", { 
+        "class":"txndemo-hex-input-sequence", 
+        text: input.sequence })
+    );
+
+    $txn_container.append($input_container);
+  }
+
+  $txn_container.append(
+    $("<span />", { 
+      "class":"txndemo-hex-num_out", 
+      text: txn.num_out })
+  );
+  
+  for (var i = 0, l = txn.outputs.length; i < l; i ++) {
+    var output = txn.outputs[i];
+    var $output_container = $("<span />", { 
+      "class":"txndemo-hex-output-container", 
+    });
+    $output_container.append(
+      $("<span />", { 
+        "class":"txndemo-hex-output-spend", 
+        text: output.spend })
+    );
+    $output_container.append(
+      $("<span />", { 
+        "class":"txndemo-hex-output-script_size", 
+        text: output.script_size })
+    );
+    $output_container.append(
+      $("<span />", { 
+        "class":"txndemo-hex-output-script", 
+        text: output.script })
+    );
+    $txn_container.append($output_container);
+  }
+
+  $txn_container.append(
+    $("<span />", { 
+      "class":"txndemo-hex-locktime", 
+      text: txn.locktime })
+  );
+
+
+  $('.txndemo-txn-hex').append($txn_container);
+}
 
 var timesPolled = {
   current: 0,
@@ -121,7 +209,7 @@ var timesPolled = {
 function pollTxn (addr) {
   //var url = "https://api.chain.com/v1/testnet3/addresses/"+addr+"/transactions?api-key-id=DEMO-4a5e1e4";
   var url = "http://localhost:4000/js/test/resp.json";
-  var hex = "http://localhost:4000/js/test/hex";
+  var hex = "http://localhost:4000/js/test/resp.hex";
   //var url2 = "https://bitcoin.toshi.io/api/v0/transactions/58978e746055095a172a85f4563ff89269d66323e5460d1a8b6a9139f90b50e5";
   var jqxhr = $.ajax(hex)
     .done(function(data) {
@@ -133,7 +221,7 @@ function pollTxn (addr) {
           pollTxn(addr);
         }, 3000);
       } else {
-        processTxn(data);
+        showTxn(processTxn(data));
       }
     })
     .fail(function() {

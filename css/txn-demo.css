@@ -1,0 +1,58 @@
+.txndemo-txn-hex {
+  word-wrap: break-word;
+}
+
+.txndemo-hex-container {
+  border: 2px solid grey;
+}
+.txndemo-hex-version {
+  background-color: lightcoral;
+}
+.txndemo-hex-num_in {
+  background-color: #0056af;
+  color: white;
+}
+.txndemo-hex-input-container {
+  border: 1px solid #0056af;
+}
+.txndemo-hex-input-hash {
+  background-color: #99ccff;
+}
+.txndemo-hex-input-index {
+  background-color: #a6d2ff;
+  border-left: 2px solid #0056af;
+}
+.txndemo-hex-input-script_size {
+  background-color: #b2d9ff;
+  border-left: 2px solid #0056af;
+}
+.txndemo-hex-input-script {
+  background-color: #bfdfff;
+  border-left: 2px solid #0056af;
+}
+.txndemo-hex-input-sequence {
+  background-color: #cce5ff;
+  border-left: 2px solid #0056af;
+}
+.txndemo-hex-num_out {
+  background-color: #256e00;
+  color: white;
+}
+.txndemo-hex-output-container {
+  border: 1px solid #256e00;
+}
+.txndemo-hex-output-spend {
+  background-color: #bbff8a;
+  border-left: 2px solid #256e00;
+}
+.txndemo-hex-output-script_size {
+  background-color: #ccffb2;
+  border-left: 2px solid #256e00;
+}
+.txndemo-hex-output-script {
+  background-color: #ddffcc;
+  border-left: 2px solid #256e00;
+}
+.txndemo-hex-locktime {
+  background-color: lightpink;
+}
