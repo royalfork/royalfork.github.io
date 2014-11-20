@@ -4,8 +4,8 @@ var zeroes = "000000000000000000000000000000000000000000000000000000000000000000
 
 function init() {
   $("#passphrase").on("input", passphraseChanged);
-  //passphraseChanged({"currentTarget":{"value":"test"}});
-  passphraseChanged();
+  $("#passphrase").val(window.location.hash.substr(1));
+  passphraseChanged({"currentTarget":{"value":window.location.hash.substr(1)}});
 }
 
 function passphraseChanged (evt) {
