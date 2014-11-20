@@ -444,9 +444,9 @@ form > p > label, form > p > input {
   margin-top: 0;
 }
 
-.post ul li + li {
-  margin-top: 10px;
-}
+/*.post ul li + li {*/
+  /*margin-top: 10px;*/
+/*}*/
 
 .post pre code {
   border: 0;
