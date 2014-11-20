@@ -5,7 +5,8 @@ js:
   - /js/wallet-gen.js 
 css: 
   - /css/wallet-gen.css
-excerpt: <p>This is a test</p>
+excerpt: <p>Gaze into the inner workings of a bitcoin address.</p>
+image: /assets/imgs/thumbs/gen-addr.png
 ---
 
 <div>This was built for academic purposes.  If you want a secure address, read <a href="https://en.bitcoin.it/wiki/Paper_wallet" target="_blank">this.</a></div>

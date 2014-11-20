@@ -359,6 +359,22 @@ form > p > label, form > p > input {
 
 .post-summary > p {
   margin-top: 20px;
+  margin-left: 240px;
+}
+
+.post-summary > form {
+  float: right;
+}
+
+.post-summary > img {
+  float: left;
+  max-width: 200px;
+  max-height: 180px;
+  margin: 20px;
+}
+
+.post-summary {
+  min-height: 220px;
 }
 
 

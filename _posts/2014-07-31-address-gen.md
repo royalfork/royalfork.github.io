@@ -1,8 +1,9 @@
 ---
 title: Tutorial - Address Generation
+image: /assets/imgs/thumbs/addr-tut.png
 ---
 
-In this tutorial, we'll be creating our own Bitcoin addresses in Ruby.  The easy way uses the [bitcoin-ruby gem](https://github.com/lian/bitcoin-ruby):
+In this tutorial, we'll be creating our own Bitcoin addresses in Ruby.  The easy way uses the [bitcoin-ruby gem](https://github.com/lian/bitcoin-ruby), but this doesn't teach us much; so we'll do it ourselves using only basic hashing and an elliptic curve cryptography libraries.
 
 {% highlight ruby %}
 require 'bitcoin'
@@ -11,7 +12,6 @@ address = Bitcoin::pubkey_to_address(key[1])
 # address => 16aqnGNe8GXKajL6Hjj6fGpPBqve8QnNfd 
 {% endhighlight %}
 
-This doesn't teach us much; so we'll do it ourselves using only basic hashing and an elliptic curve cryptography libraries.
 
 # Introduction
 

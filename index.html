@@ -9,8 +9,11 @@ layout: default
       <li>
         <div class="post-header post-summary">
           <a href="{{post.url}}"><h1>{{ post.title }}</h1></a>
+          <img src="{{ post.image }}" alt="" />
           {{ post.excerpt }}
-          <input type="button" class="btn" value="Read More" />
+          <form action="{{ post.url }}#{{ post.first-anchor }}" method="get">
+            <input type="submit" class="btn" value="Read More" />
+          </form>
         </div>
       </li>
     {% endfor %}
