@@ -1,0 +1,46 @@
+{
+  "hash":"1737520df23d7d4925247492ee77c7e02897c8d128cc36198a033167d0870cfe",
+  "version":1,
+  "lock_time":0,
+  "size":225,
+  "inputs":[
+    {
+      "previous_transaction_hash":"fbad0c389e1e9c6d0b62ac63632a81a5b77fd5b6afe2b83efc77e5295deaebee",
+      "output_index":0,
+      "amount":17117016412,
+      "script":"3044022013a88bc90a3e5a8c32ec634476dd15aa051ee006fda2911c5fd731847cf6ab8e02203d4a9cfb595447e5d57f0ddeffb9d1ff7c2210c33a85e366bea5a996f472072f01 03c42bd3624d50406c16b8a02cdfb8f5763ea42d45d69f96ced716c36005a88ac0",
+      "addresses":[
+        "mg5vV4Dyo9RobXie5cn63mXQZk8r4w9syD"
+      ]
+    }
+  ],
+  "outputs":[
+    {
+      "amount":17118332,
+      "spent":false,
+      "script":"OP_DUP OP_HASH160 c1efcab4ebad26bd6509f6bbdf12a4c24ad719fd OP_EQUALVERIFY OP_CHECKSIG",
+      "script_hex":"76a914c1efcab4ebad26bd6509f6bbdf12a4c24ad719fd88ac",
+      "script_type":"hash160",
+      "addresses":[
+        "myCPy74KJ3htHqd8VKjvCHWYxEcJA5vGfD"
+      ]
+    },
+    {
+      "amount":17099898080,
+      "spent":false,
+      "script":"OP_DUP OP_HASH160 207680296e32593162f5196db1308ef2ad0820a9 OP_EQUALVERIFY OP_CHECKSIG",
+      "script_hex":"76a914207680296e32593162f5196db1308ef2ad0820a988ac",
+      "script_type":"hash160",
+      "addresses":[
+        "miUbsm5o3GgpFuZfsRY3MdAx5FiwXhjxvd"
+      ]
+    }
+  ],
+  "amount":17117016412,
+  "fees":0,
+  "confirmations":6,
+  "block_height":285571,
+  "block_hash":"000000000ad46e1e70d70f8cc51627b3a0a69428a2ee1e3c1165481b27ee2fef",
+  "block_time":"2014-10-02T14:23:35Z",
+  "block_branch":"main"
+}

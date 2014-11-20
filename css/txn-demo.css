@@ -1,0 +1,121 @@
+.mojoframe {
+  width: 100%;
+  height: 450px;
+}
+
+.txndemo-txn-hex {
+  word-break: break-all;
+}
+.txndemo-hash {
+  background-color: lightgray;
+}
+.txndemo-hex-container {
+  border: 2px solid grey;
+}
+.txndemo-hex-version {
+  background-color: lightcoral;
+}
+.txndemo-hex-num_in {
+  background-color: #0056af;
+  color: white;
+}
+.txndemo-hex-input-container {
+  border: 1px solid #0056af;
+}
+.txndemo-hex-input-hash {
+  background-color: #99ccff;
+}
+.txndemo-hex-input-index {
+  background-color: #a6d2ff;
+  border-left: 2px solid #0056af;
+}
+.txndemo-hex-input-script_size {
+  background-color: #b2d9ff;
+  border-left: 2px solid #0056af;
+}
+.txndemo-hex-input-script {
+  background-color: #bfdfff;
+  border-left: 2px solid #0056af;
+}
+.txndemo-hex-input-sequence {
+  background-color: #cce5ff;
+  border-left: 2px solid #0056af;
+}
+.txndemo-hex-num_out {
+  background-color: #256e00;
+  color: white;
+}
+.txndemo-hex-output-container {
+  border: 1px solid #256e00;
+}
+.txndemo-hex-output-spend {
+  background-color: gold;
+  border-left: 2px solid #256e00;
+}
+.txndemo-hex-output-script_size {
+  background-color: #bbff8a;
+  border-left: 2px solid #256e00;
+}
+.txndemo-hex-output-script {
+  background-color: #ccffb2;
+  border-left: 2px solid #256e00;
+}
+.txndemo-hex-locktime {
+  background-color: lightpink;
+}
+
+
+.loader {
+  width: 20px;
+  height: 20px;
+  border-radius: 40px;
+  -webkit-box-sizing: border-box;
+  border: solid 3px grey;
+  border-top-color: black;
+  -webkit-animation: spin 1s infinite linear;
+  -moz-animation: spin 1s infinite linear;
+  -ms-animation: spin 1s infinite linear;
+  -o-animation: spin 1s infinite linear;
+  animation: spin 1s infinite linear;
+}
+
+.pending:after {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  margin-left: 5px;
+  margin-top: 7px;
+  border: solid 3px #cfdadd;
+  border-top-color: #4f566f;
+  border-radius: 40px;
+  content: "";
+  -webkit-box-sizing: border-box;
+  -webkit-animation: spin 1s infinite linear;
+     -moz-animation: spin 1s infinite linear;
+      -ms-animation: spin 1s infinite linear;
+       -o-animation: spin 1s infinite linear;
+          animation: spin 1s infinite linear;
+}
+
+@-webkit-keyframes spin { 
+  100% { 
+    -webkit-transform: rotate(360deg); 
+  } 
+} 
+
+table {
+  border: 1px solid black;
+  table-layout: fixed;
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th, td {
+  border: 1px solid black;
+  word-break: break-word;
+  padding: 5px;
+}
+
+td > span {
+  border-left: none !important;
+}
