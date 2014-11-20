@@ -7,7 +7,11 @@ layout: default
   <ul class="posts">
     {% for post in site.posts %}
       <li>
-        {% include post.html %}
+        <div class="post-header post-summary">
+          <a href="{{post.url}}"><h1>{{ post.title }}</h1></a>
+          {{ post.excerpt }}
+          <input type="button" class="btn" value="Read More" />
+        </div>
       </li>
     {% endfor %}
   </ul>
