@@ -1,0 +1,1 @@
+/home/joe/playground/bitcoinjs-lib/bitcoinjs-min.js

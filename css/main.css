@@ -55,6 +55,83 @@ ul {
 
 /* Utility */
 
+.i-b {
+  display: inline-block;
+}
+
+.btn {
+  display: inline-block;
+  padding: 6px 12px;
+  margin-bottom: 0;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.42857143;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  -ms-touch-action: manipulation;
+  touch-action: manipulation;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  background-image: none;
+  border: 1px solid transparent;
+  border-radius: 4px;
+}
+
+.btn-primary {
+  color: #fff;
+  background-color: #337ab7;
+  border-color: #2e6da4;
+}
+
+.default-font {
+  font-family: "Roboto";
+}
+
+.disp-t-r {
+  display: table-row;
+}
+.disp-t-c {
+  display: table-cell;
+}
+.disp-t {
+  display: table;
+}
+
+.pad-l-l {
+  padding-left: 30px;
+}
+.pad-l-m {
+  padding-left: 20px;
+}
+.pad-l-s {
+  padding-left: 10px;
+}
+.mar-l-l {
+  margin-left: 30px;
+}
+.mar-l-m {
+  margin-left: 20px;
+}
+.mar-l-s {
+  margin-left: 10px;
+}
+
+form {
+  display: table;
+}
+
+form > p {
+  display: table-row;
+}
+
+form > p > label, form > p > input {
+  display: table-cell;
+}
+
 .wrap:before,
 .wrap:after { content:""; display:table; }
 .wrap:after { clear: both; }
@@ -75,6 +152,10 @@ ul {
 
 .no-list {
   list-style: none; 
+}
+
+.break-all {
+  word-break: break-all;
 }
 
 .note {
