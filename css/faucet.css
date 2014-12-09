@@ -1,0 +1,174 @@
+.documentation {
+  max-width: 960px;
+  margin: auto;
+  font-family: sans-serif;
+}
+
+.resource {
+  border-top: none;
+  -moz-border-radius-bottomleft: 6px;
+  -webkit-border-bottom-left-radius: 6px;
+  -o-border-bottom-left-radius: 6px;
+  -ms-border-bottom-left-radius: 6px;
+  -khtml-border-bottom-left-radius: 6px;
+  border-bottom-left-radius: 6px;
+  -moz-border-radius-bottomright: 6px;
+  -webkit-border-bottom-right-radius: 6px;
+  -o-border-bottom-right-radius: 6px;
+  -ms-border-bottom-right-radius: 6px;
+  -khtml-border-bottom-right-radius: 6px;
+  border-bottom-right-radius: 6px;
+  margin: 0 0 20px;
+}
+
+.resource::before {
+  margin-right: 10px;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: white;
+  display: inline-block;
+  width: 50px;
+  font-size: 0.7em;
+  text-align: center;
+  padding: 7px 0 4px;
+  -moz-border-radius: 2px;
+  -webkit-border-radius: 2px;
+  -o-border-radius: 2px;
+  -ms-border-radius: 2px;
+  -khtml-border-radius: 2px;
+  border-radius: 2px;
+}
+
+.description {
+  overflow: hidden;
+  padding: 0;
+  display: block;
+  clear: none;
+  float: right;
+  font-size: .9em;
+  padding: 2px 10px;
+}
+
+.content {
+  padding: 10px;
+  color: #333333;
+  font-size: .9em;
+}
+
+.content h4 {
+  font-size: 1em;
+  margin: 0;
+  padding: 20px 0 5px;
+}
+
+.content table {
+  width: 100%;
+  border-collapse: collapse;
+  border-spacing: 0;
+  font-size: 0.9em;
+}
+
+.content tr th {
+  text-align: left;
+  font-weight: normal;
+  vertical-align: middle;
+  padding: 5px;
+  color: #666666;
+  border-bottom: 1px solid #999999;
+}
+
+.content td {
+  padding: 5px;
+}
+
+.content pre {
+  margin-top: 5px;
+  background-color: #fcf6db;
+  border: 1px solid #e5e0c6;
+  font-family: monospace;
+  padding: 10px;
+  font-size: 0.95em;
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.responses th.code {
+  width: 130px;
+}
+
+.responses th.type {
+  width: 160px;
+}
+
+.demo-btn {
+  display: inline-block;
+}
+
+.demo-btn > a {
+  margin-left: 10px;
+}
+
+.pending:before {
+  position: static;
+  float: right;
+  margin-right: -30px;
+  width: 20px;
+  height: 20px;
+  margin-left: 5px;
+  margin-top: 7px;
+  border: solid 3px #cfdadd;
+  border-top-color: #4f566f;
+  border-radius: 40px;
+  content: "";
+  -webkit-box-sizing: border-box;
+  -webkit-animation: spin 1s infinite linear;
+     -moz-animation: spin 1s infinite linear;
+      -ms-animation: spin 1s infinite linear;
+       -o-animation: spin 1s infinite linear;
+          animation: spin 1s infinite linear;
+}
+
+@-webkit-keyframes spin { 
+  100% { 
+    -webkit-transform: rotate(360deg); 
+  } 
+} 
+
+
+/* Get and Post specific parameters */
+
+.get, .get > .content {
+  background-color: #e7f0f7;
+  border: 1px solid #c3d9ec;
+}
+
+.get::before {
+  content: "get";
+  background-color: #0f6ab4;
+}
+
+.get > .description {
+  color: #0f6ab4;
+}
+
+.get h4 {
+  color: #0f6ab4;
+}
+
+.postReq, .postReq > .content {
+  background-color: #e7f6ec;
+  border: 1px solid #c3e8d1;
+}
+
+.postReq::before {
+  content: "post";
+  background-color: #10a54a;
+}
+
+.postReq > .description {
+  color: #10a54a;
+}
+
+.postReq h4 {
+  color: #10a54a;
+}
